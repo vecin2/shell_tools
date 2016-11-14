@@ -1,3 +1,7 @@
 #!/bin/sh
 
-VBoxManage startvm "Win7-ENT" 
+. ./vb-commands.sh 
+
+start_vm "Win7-ENT"
+
+:

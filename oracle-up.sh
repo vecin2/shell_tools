@@ -1,3 +1,5 @@
 #!/bin/sh
 
-VBoxManage startvm "oracle12c"  --type sdl 
+. ./vb-commands.sh
+
+start_vm "oracle12c" "--type sdl"
