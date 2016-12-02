@@ -1,7 +1,7 @@
 #!/bin/sh
 
 if [ "$#" -eq 0 ]; then
-	FROM_DATE=date +%Y-%m-%d
+	FROM_DATE=`date +%Y-%m-%d`
 	UPDATE_DB= true
 elif [ "$#" -eq 1 ]; then
 	FROM_DATE=$1
@@ -13,7 +13,6 @@ else
 	echo Usage from.date=yyyymmdd
 	return 1
 fi
-FROM_DATE=date "+%Y-%m-%d"
 
 CORE_HOME=/opt/em/projects/prudential/MCCS/AgentDesktop/ 
 EXPORT_LOCATION=$CORE_HOME/migration/exportedReleaseMigration
@@ -36,7 +35,7 @@ rm $FILE_NAME
 svn up
 
 echo  "\n Extracting current jar to $CORE_HOME/project/resources/migration/$EXTRACT_FOLDER"
-#unzip ./$FILE_NAME  -d $EXTRACT_FOLDER
+unzip ./$FILE_NAME  -d $EXTRACT_FOLDER
         
 echo  "\n  Overriding current migration files with exported ones"
 #rm -r $EXPORT_LOCATION/META-INF
@@ -47,8 +46,8 @@ echo  "\n Packing new jar and overriding existing one"
 #zip -r ../$FILE_NAME .
         
 echo  "\n Cleaning exploded directories"
-##cd ..   
-##rm -r $EXTRACT_FOLDER 
+#cd ..   
+#rm -r $EXTRACT_FOLDER 
         
 echo  "\n Reimporting jar to check there is erros"
 cd $CORE_HOME/bin
