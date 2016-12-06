@@ -1,14 +1,15 @@
 #!/bin/sh
 
+. ./file-system-util.sh
 if [ "$#" -eq 0 ]; then
-	FROM_DATE=`date +%Y-%m-%d`
-	UPDATE_DB= true
-elif [ "$#" -eq 1 ]; then
-	FROM_DATE=$1
 	UPDATE_DB=false
+	FROM_DATE=`date +%Y-%m-%d`
+elif [ "$#" -eq 1 ]; then
+	UPDATE_DB=$1
+	FROM_DATE=`date +%Y-%m-%d`
 elif [ "$#" -eq 2 ]; then
-	FROM_DATE=$1
-	UPDATE_DB= $2
+	UPDATE_DB= $1
+	FROM_DATE=$2
 else
 	echo Usage from.date=yyyymmdd
 	return 1
@@ -19,6 +20,7 @@ EXPORT_LOCATION=$CORE_HOME/migration/exportedReleaseMigration
 FILE_NAME=ReleaseMigration.jar
 EXTRACT_FOLDER=ReleaseMigration
 
+echo Refresing migration jar from date: $FROM_DATE
 if [ $UPDATE_DB = true ]; then
 	echo "\n Making sure database is up to date"
 	svn up $CORE_HOME/modules
@@ -35,23 +37,25 @@ rm $FILE_NAME
 svn up
 
 echo  "\n Extracting current jar to $CORE_HOME/project/resources/migration/$EXTRACT_FOLDER"
+rm -rf $EXTRACT_FOLDER
 unzip ./$FILE_NAME  -d $EXTRACT_FOLDER
-        
+
+#function provide within file imported
+echo Reviewing list of files exported:
+prompt_remove_files "$EXPORT_LOCATION/*.json"
+
 echo  "\n  Overriding current migration files with exported ones"
-#rm -r $EXPORT_LOCATION/META-INF
-#cp $EXPORT_LOCATION/*.* $EXTRACT_FOLDER 
+rm -r $EXPORT_LOCATION/META-INF
+cp $EXPORT_LOCATION/*.* $EXTRACT_FOLDER 
 
 echo  "\n Packing new jar and overriding existing one"
-#cd $EXTRACT_FOLDER
-#zip -r ../$FILE_NAME .
+cd $EXTRACT_FOLDER
+zip -r ../$FILE_NAME .
         
-echo  "\n Cleaning exploded directories"
-#cd ..   
-#rm -r $EXTRACT_FOLDER 
         
 echo  "\n Reimporting jar to check there is erros"
 cd $CORE_HOME/bin
-#./ccadmin.sh import-data -Dimport.location=$CORE_HOME/project/resources/migration/$FILE_NAME
+./ccadmin.sh import-data -Dimport.location=$CORE_HOME/project/resources/migration/$FILE_NAME
 
 return $?
 
