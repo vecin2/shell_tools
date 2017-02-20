@@ -13,4 +13,5 @@ echo   "Creating sql module with sql: $SQL"
 
 	echo PROJECT \$Revision: $REVISION \$ > $SQL_PATH/update.sequence 
 	echo   $SQL > $SQL_PATH/tableData.sql
+	vi $SQL_PATH
 }

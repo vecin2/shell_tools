@@ -1,2 +1,2 @@
 #!/bin/sh
-./svn-status.sh | grep ^\? | awk '{print $2}' | xargs svn add --force
+./svn-status.sh $1 | grep ^\? | awk '{print $2}' | xargs svn add --force

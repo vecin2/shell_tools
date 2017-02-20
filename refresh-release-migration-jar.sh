@@ -11,7 +11,7 @@ elif [ "$#" -eq 2 ]; then
 	UPDATE_DB= $1
 	FROM_DATE=$2
 else
-	echo Usage from.date=yyyymmdd
+	echo Usage from.date=yyyy-mm-dd
 	return 1
 fi
 
@@ -52,10 +52,18 @@ echo  "\n Packing new jar and overriding existing one"
 cd $EXTRACT_FOLDER
 zip -r ../$FILE_NAME .
         
-        
-echo  "\n Reimporting jar to check there is erros"
-cd $CORE_HOME/bin
-./ccadmin.sh import-data -Dimport.location=$CORE_HOME/project/resources/migration/$FILE_NAME
+JAR_FILE_PATH$CORE_HOME/project/resources/migration/$FILE_NAME
+read -p  "\n Do you want to reimport jar to check there is errors(y/n)?" choice
+case $choice in
+	[Yy]* ) cd $CORE_HOME/bin;./ccadmin.sh import-data -Dimport.location=$JAR_FILE_PATH; ;;
+	esac
+#cd $CORE_HOME/bin
+#./ccadmin.sh import-data -Dimport.location=$CORE_HOME/project/resources/migration/$FILE_NAME
 
+if [ $? -eq 0 ];then
+read -p  "\n Do you want to commit ReleaseMigration.jar(y/n)?" choice
+case $choice in
+	[Yy]* ) read -p "\n Please enter commit message:\n " MESSAGE;cd $JAR_FILE_PATH;svn ci -m "$MESSAGE"; ;;
+	esac
+fi
 return $?
-

@@ -3,17 +3,12 @@
 
 . ./sql-base.sh
 
-SQL_MODULE=/PruCaseHandling/sqlScripts/oracle/updates/Pru_R3_0_1/PullUpInlineCreate
-REVISION=11661
+SQL_MODULE=/PruCaseHandling/sqlScripts/oracle/updates/Pru_R3_0_1/ConfigChaseIllustrationPD
+REVISION=11913
 
-SQL="UPDATE EVA_VERB
-set (ENTITY_DEF_ID)=(@ED.PruBaseIllustrationED)
-where ID=@V.PruInlineCreateAccIllustration;\n
 
-delete from EVA_VERB_LOC
-where ID = @V.PruInlineCreateIllPenInc;\n
+SQL="update EVA_PROCESS_DESCRIPTOR set (CONFIG_PROCESS_ID)= (@PD.ChangeStateActionSLAConfig) where id = @PD.ChaseIllustration;"
 
-delete from EVA_VERB
-where ID = @V.PruInlineCreateIllPenInc;"
+
 
 create_sql_module $SQL_MODULE $REVISION "$SQL"
