@@ -52,7 +52,7 @@ echo  "\n Packing new jar and overriding existing one"
 cd $EXTRACT_FOLDER
 zip -r ../$FILE_NAME .
         
-JAR_FILE_PATH$CORE_HOME/project/resources/migration/$FILE_NAME
+JAR_FILE_PATH=$CORE_HOME/project/resources/migration/$FILE_NAME
 read -p  "\n Do you want to reimport jar to check there is errors(y/n)?" choice
 case $choice in
 	[Yy]* ) cd $CORE_HOME/bin;./ccadmin.sh import-data -Dimport.location=$JAR_FILE_PATH; ;;
@@ -63,7 +63,7 @@ case $choice in
 if [ $? -eq 0 ];then
 read -p  "\n Do you want to commit ReleaseMigration.jar(y/n)?" choice
 case $choice in
-	[Yy]* ) read -p "\n Please enter commit message:\n " MESSAGE;cd $JAR_FILE_PATH;svn ci -m "$MESSAGE"; ;;
+	[Yy]* ) read -p "\n Please enter commit message:\n " MESSAGE;cd $CORE_HOME;svn ci $JAR_FILE_PATH -m "$MESSAGE"; ;;
 	esac
 fi
 return $?

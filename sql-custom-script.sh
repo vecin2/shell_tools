@@ -3,12 +3,15 @@
 
 . ./sql-base.sh
 
-SQL_MODULE=/PruCaseHandling/sqlScripts/oracle/updates/Pru_R3_0_1/ConfigChaseIllustrationPD
-REVISION=11913
+SQL_MODULE=/PruCaseHandling/sqlScripts/oracle/updates/Pru_R3_0_1/IllustrationEntDefConfig
+REVISION=12101
 
+SQL=$(
+echo "INSERT INTO EVA_ENTITY_DEF_PERSIST_PREF (ENTITY_DEF_ID,ENTITY_DEF_ENV_ID,RELEASE_ID,LOAD_KEYWORDS,LOAD_ASSOCIATIONS,LOAD_ATTRIBUTES)
+VALUES (@ED.PruAccumulationIllustration,@ENV.Dflt,@RELEASE.ID,'N','Y','N');
 
-SQL="update EVA_PROCESS_DESCRIPTOR set (CONFIG_PROCESS_ID)= (@PD.ChangeStateActionSLAConfig) where id = @PD.ChaseIllustration;"
-
+INSERT INTO EVA_ENTITY_DEF_PERSIST_PREF (ENTITY_DEF_ID,ENTITY_DEF_ENV_ID,RELEASE_ID,LOAD_KEYWORDS,LOAD_ASSOCIATIONS,LOAD_ATTRIBUTES)
+VALUES (@ED.PruIllustrationPensionIncome,@ENV.Dflt,@RELEASE.ID,'N','Y','N');")
 
 
 create_sql_module $SQL_MODULE $REVISION "$SQL"
