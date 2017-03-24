@@ -22,16 +22,16 @@ ANT_HOME=$CORE_HOME/lib/ant
 CCADMIN_HOSTNAME=`hostname | cut -f1 -d'.'`
 
 [ -r $CORE_HOME/config/project.environment ] && . $CORE_HOME/config/project.environment
-[ -r $HOME/.kana/ccadmin.environment ] && . $HOME/.kana/ccadmin.environment
+[ -r $HOME/.ciboodle/ccadmin.environment ] && . $HOME/.ciboodle/ccadmin.environment
 
 if [ -z "$JAVA_HOME" ]; then
     echo "Please setup the environment variable JAVA_HOME to point to a valid Java installation"
     exit 1
 fi
 
-MEMORY="-Xmx512m -XX:MaxMetaspaceSize=384m"
+MEMORY="-Xmx512m -XX:MaxPermSize=128m"
 if [ `uname -m` = 'x86_64' ]; then
-  MEMORY="-Xmx768m -XX:MaxMetaspaceSize=1024m"
+  MEMORY="-Xmx768m -XX:MaxPermSize=256m"
 fi
 ANT_OPTS="$MEMORY -Dsvnkit.http.keepCredentials=false $ANT_OPTS"
 export ANT_OPTS
@@ -51,14 +51,4 @@ if [ "$#" -ge "1" ]; then
     shift
 fi
 
-if [ -e "$CORE_HOME"/lib/ccadmin_antlib/AntLogger*.jar ]
-then
-    cp "$CORE_HOME"/lib/ccadmin_antlib/AntLogger*.jar "$CORE_HOME"/lib/antlib/AntLogger.jar
-fi
-
-if [ -e "$CORE_HOME/lib/antlib/AntLogger.jar" ]
-then
-    CUSTOM_LOGGER="-logger com.gtnet.ant.logger.ParallelLogger"
-fi
-
-$ANT_HOME/bin/ant -lib $CORE_HOME/lib/antlib $CUSTOM_LOGGER -f $COMMAND_FILE -Drun.command=$COMMAND -Drun.target=$TARGET -Ddefault.core.home=$CORE_HOME -Dccadmin.hostname=$CCADMIN_HOSTNAME $CCADMIN_OPTS "$@"
+$ANT_HOME/bin/ant -lib $CORE_HOME/lib/antlib -f $COMMAND_FILE -Drun.command=$COMMAND -Drun.target=$TARGET -Ddefault.core.home=$CORE_HOME -Dccadmin.hostname=$CCADMIN_HOSTNAME $CCADMIN_OPTS "$@"
