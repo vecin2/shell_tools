@@ -9,5 +9,5 @@ then
 	return 1
 fi
 
-./svn-status.sh $2 | awk '{print $2}' | xargs echo svn commit -m \"$1\"  
-./svn-status.sh $2 | awk '{print $2}' | xargs echo svn commit -m \"$1\"  | bash
+./svn-status.sh $2 | grep -v \? | awk '{print $2}' | xargs echo svn commit -m \"$1\"  
+./svn-status.sh $2 | grep -v \? | awk '{print $2}' | xargs echo svn commit -m \"$1\"  | bash
