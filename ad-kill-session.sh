@@ -1,4 +1,6 @@
 #!/bin/sh
+. ./configuration.sh
 
-kill -9 $(ps -ef | grep java |  grep jboss | grep Standalone | awk '{print $2}')
+echo Killing session in appserver: $APP_SERVER
+kill -9 $(ps -ef | grep java |  grep $APP_SERVER | awk '{print $2}')
 

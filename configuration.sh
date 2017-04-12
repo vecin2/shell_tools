@@ -1,4 +1,5 @@
 #!/bin/bash
 
-export MODULES_PREFIX=SPEN
-export CORE_HOME=/opt/projects/SPEN/CR_RELEASE_7
+export MODULES_PREFIX=SGroup
+export CORE_HOME=/opt/verint/verint_projects/trunk
+export APP_SERVER=weblogic
