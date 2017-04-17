@@ -1,19 +1,31 @@
 #!/bin/bash
 
-
 . ./sql-base.sh
+. ./sql-tag-base.sh
 
-SQL_MODULE=/SPENConnection/sqlScripts/oracle/updates/CR_RELEASE_7/PostQuoteCustomerMoodTag
-REVISION=15368
+SQL_MODULE=/SGroupContactHistory/sqlScripts/oracle/updates/SG0_3/CreateTagContactReasonTest1
+REVISION=398
 
+#MM/DD/YYYY HH:MI:SS AM
+DATE="04/17/2017"
 
+declare -a DISPLAY_NAMES=('Contact Reasons test 2' 
+					'[' 
+					   'Bank Account' 
+					   '[' 
+					      'Open Account' 
+					      'Close Account' 
+					      'Creating a 123 account but dont close' 
+					   ']' 
+					   'Mortgage' 
+					   '[' 
+					      'Open Mortgage' 
+					      'Cancel Mortgage' 
+					      'Activate  Mortgage' 
+					   ']' 
+					']')
 
-DATE="04/03/2017"
-declare -a TAG_NAMES=(PostQuoteContactMood ContactMood_fully_satisfied ContactMood_happy_with_issues Dissatisfaction_req_feedback Not_required Attempted Refused_CS_Survey)
-declare -a DISPLAY_NAMES=('Post Quote Contact Mood' 'Successful – Fully satisfied' 'Successful – Happy but some issues' 'Successful – Dissatisfaction requiring feedback' 'Not required' 'Attempted' 'Refused any CS Survey')
-
-
-SQL=$(generate_tag_sql $TAG_NAMES $DISPLAY_NAMES)
-
+SQL=$(generate_tag)
+echo "$SQL"
 create_sql_module $SQL_MODULE $REVISION "$SQL"
 
