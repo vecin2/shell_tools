@@ -119,6 +119,25 @@ set_previous_tag(){
 		PREVIOUS_TAG_RELEASE_ID=@RELEASE.ID
 	fi
 }
+is_tag(){
+	if end_level $COUNTER; then
+		return 1
+	elif begin_new_level $COUNTER; then
+		return 1
+	else
+		return 0
+	fi
+}
+contains(){
+	for i in "${ASSIGNED_IDS[@]}"
+	do
+		if [ "$i" == "$1" ]; then
+			return 0
+		fi
+		# or do whatever with individual element of the array
+	done
+	return 1
+}
 generate_tag(){
 	TAG_BREAKER="----------------NEW TAG------------------"
 	ARRAY_LENGTH=${#DISPLAY_NAMES[@]}
@@ -134,11 +153,21 @@ generate_tag(){
 
 	declare -a TAG_IDS
 	COUNTER=1
+	ASSIGNED_IDS=('hola' 'adios')
 	while [ $COUNTER -lt $ARRAY_LENGTH ]; do
-		NO_SPACE_NAME=$(echo ${DISPLAY_NAMES[$COUNTER]} | sed 's/ //g')
-		TRUNC_TAG_NAME=$TAGSET_ID$'_'${NO_SPACE_NAME:0:20}
-		TAG_IDS[$COUNTER]=$(echo $TRUNC_TAG_NAME | awk '{print tolower($0)}')
-		let COUNTER=COUNTER+1
+		if is_tag; then
+			SANITISE_ID=$(echo ${DISPLAY_NAMES[$COUNTER]} | sed 's/ //g' | sed 's/-//g'| sed 's,/,,g')
+			TRUNC_TAG_NAME=$TAGSET_ID$'_'${SANITISE_ID:0:20}
+			NEW_ID_NAME=$(echo $TRUNC_TAG_NAME | awk '{print tolower($0)}')
+			#if alread exist assign last three characters randomly
+			if contains $NEW_ID_NAME; then
+				RANDOM_STR=$(echo $(head /dev/urandom | tr -dc a-z | head -c 3))
+				NEW_ID_NAME=${NEW_ID_NAME::-3}$RANDOM_STR
+			fi
+			ASSIGNED_IDS+=($NEW_ID_NAME)
+			TAG_IDS[$COUNTER]=$NEW_ID_NAME
+		fi
+			let COUNTER=COUNTER+1
 	done
 	#print_tag
 

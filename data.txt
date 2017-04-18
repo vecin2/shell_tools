@@ -1,0 +1,146 @@
+
+					   'AO-asiat'
+					   '[' 
+					      'Bonusasiat'
+					      'Edut ja tarjoukset'
+					      'Estoihin liittyvä yhteydenotto'
+					      'Jäsenyyteen liittyvät toimenpiteet'
+					      'Korttiin liittyvät asiat'
+					      'Kuolemantapaus'
+					      'Lahjakortit'
+					      'Maksutapaetu'
+					      'Omien tietojen päivitys'
+					      'Osuuskauppa-asia'
+					      'Partnereihin liittyvät kyselyt'
+					      'S-Tili / saldokyselyt'
+					      'S-Tunnus / Oma S-Kanava'
+					      'Tunnukset'
+					    ']' 
+'Asiakkuus'
+'['
+'laikäiset'
+'Identiteettivarkaus'
+'Kuolinpesät'
+'Omien tietojen päivitys'
+'Palvelumaksuhyvitykset'
+'Reklamaatiot'
+'Saldotodistus / asiakkuustodistus'
+'S-Pankkiiriasia'
+'Ulkomaalaiset'
+'Uusi asiakas'
+'Valtakirjat ja edunvalvonta'
+']'
+
+'Kortit ja korttiluotot'
+'['
+'Hakemus / päätös / liitteet'
+'Katevarmennuksen poisto'
+'Laskutus'
+'Lopetus'
+'Luotonvalvonta'
+'Maksulupaus'
+'Monitorointi'
+'Muutos'
+'Perintä'
+'Väärinkäytökset'
+'Yleinen neuvonta'
+']'
+
+Maksamisen palvelut
+
+E-lasku ja suoramaksu
+Maksupalvelu
+Tilisiirrot
+
+
+S-Mobiili
+
+Mobiilitankkaus
+Siirto
+Tunnistautuminen
+Virhetilanteet ja selvittelyt
+Yleinen neuvonta
+
+
+Säästäminen ja sijoittaminen
+
+Avaus
+Lopetus
+Muu
+Muutos
+Rahastotoimeksianto
+Selvittelyt
+Sijoitusneuvonta
+S-Osakekauppa
+Yleinen neuvonta
+
+
+Tilit
+
+Avaus
+Käyttöoikeuden poisto
+Lopetus
+Luotonvalvonta
+Monitorointi
+Muutos
+Perintä
+Tapahtumat / saldokyselyt
+Tilinylitys
+Väärinkäytökset
+Yleinen neuvonta
+
+
+Vakuudelliset lainat
+
+Ajanvaraus
+Hakemuksen peruutus
+Avaus
+Käyttöoikeuden poisto
+Lopetus
+Luotonvalvonta
+Monitorointi
+Muutos
+Perintä
+
+
+Vakuudettomat luotot
+
+Tapahtumat / saldokyselyt
+Tilinylitys
+Väärinkäytökset
+Yleinen neuvonta
+Muut taustatyöt
+Muutokset
+Perintä
+Suorituksen kohdistus / palautus
+Takaisinmaksuun liittyvät asiat
+Yleinen neuvonta
+
+
+Verkkopankki
+
+Lukituksen avaus
+Tunnukset ja salasanat
+Yleinen neuvonta
+
+
+Yritykset
+
+E-palvelut
+Konekielinen maksuliikenne
+Kortit
+Maatilarahoitus
+RS-asiat
+Taloyhtiörahoitus
+Tilit
+Verkkolaskutus
+Verkkopankki
+Yleinen neuvonta
+Yritysrahoitus
+
+
+Ajankohtaista
+
+Asiakaskirje
+Kampanja
+
