@@ -2,16 +2,13 @@
 #read -e -p 
 
 . ./sql-base.sh
+SQL_MODULE=SGroupFrameworkEVA/sqlScripts/oracle/updates/SG0_3/OrganisationTagData
+REVISION=473
 
-SQL_MODULE=/PruCaseHandling/sqlScripts/oracle/updates/Pru_R3_0_1/IllustrationEntDefConfig
-REVISION=12101
 
-SQL=$(
-echo "INSERT INTO EVA_ENTITY_DEF_PERSIST_PREF (ENTITY_DEF_ID,ENTITY_DEF_ENV_ID,RELEASE_ID,LOAD_KEYWORDS,LOAD_ASSOCIATIONS,LOAD_ATTRIBUTES)
-VALUES (@ED.PruAccumulationIllustration,@ENV.Dflt,@RELEASE.ID,'N','Y','N');
-
-INSERT INTO EVA_ENTITY_DEF_PERSIST_PREF (ENTITY_DEF_ID,ENTITY_DEF_ENV_ID,RELEASE_ID,LOAD_KEYWORDS,LOAD_ASSOCIATIONS,LOAD_ATTRIBUTES)
-VALUES (@ED.PruIllustrationPensionIncome,@ENV.Dflt,@RELEASE.ID,'N','Y','N');")
-
+SQL="insert into SGROUP_ORGANISATION_TAG (ORG_SYSTEM_CODE, TAG_SYSTEM_CODE, TAG_TYPE_CODE)
+values('organisat_sbank','sbankcxkl','contactReasons');
+insert into SGROUP_ORGANISATION_TAG (ORG_SYSTEM_CODE, TAG_SYSTEM_CODE, TAG_TYPE_CODE)
+values('organisat_mara','maracocae','contactReasons');"
 
 create_sql_module $SQL_MODULE $REVISION "$SQL"

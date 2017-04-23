@@ -156,7 +156,8 @@ generate_tag(){
 	ASSIGNED_IDS=('hola' 'adios')
 	while [ $COUNTER -lt $ARRAY_LENGTH ]; do
 		if is_tag; then
-			SANITISE_ID=$(echo ${DISPLAY_NAMES[$COUNTER]} | sed 's/ //g' | sed 's/-//g'| sed 's,/,,g')
+			#SANITISE_ID=$(echo ${DISPLAY_NAMES[$COUNTER]} | sed 's/ //g' | sed 's/-//g'| sed 's,/,,g'| sed 's/(//g' | sed 's/)//g')
+			SANITISE_ID=$(echo ${DISPLAY_NAMES[$COUNTER]} | tr -cd '[[:alnum:]]')
 			TRUNC_TAG_NAME=$TAGSET_ID$'_'${SANITISE_ID:0:20}
 			NEW_ID_NAME=$(echo $TRUNC_TAG_NAME | awk '{print tolower($0)}')
 			#if alread exist assign last three characters randomly

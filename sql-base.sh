@@ -14,6 +14,7 @@ create_sql_module(){
 	echo PROJECT \$Revision: $REVISION \$ > $SQL_PATH/update.sequence 
 	echo   "$SQL" > $SQL_PATH/tableData.sql
 	vi $SQL_PATH/tableData.sql
+	echo $SQL_PATH/tableData.sql
 }
 
 delete_verb(){
