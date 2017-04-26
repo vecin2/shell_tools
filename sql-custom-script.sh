@@ -2,13 +2,14 @@
 #read -e -p 
 
 . ./sql-base.sh
-SQL_MODULE=SGroupFrameworkEVA/sqlScripts/oracle/updates/SG0_3/OrganisationTagData
-REVISION=473
+SQL_MODULE=SGroupAddChannelsReportingFactsSchema/sqlScripts/oracle/updates/SG0_3/AddReasonToFactInteraction
+REVISION=521
 
 
-SQL="insert into SGROUP_ORGANISATION_TAG (ORG_SYSTEM_CODE, TAG_SYSTEM_CODE, TAG_TYPE_CODE)
-values('organisat_sbank','sbankcxkl','contactReasons');
-insert into SGROUP_ORGANISATION_TAG (ORG_SYSTEM_CODE, TAG_SYSTEM_CODE, TAG_TYPE_CODE)
-values('organisat_mara','maracocae','contactReasons');"
+SQL="
+alter table FACT_AD_INTERACTION_SUMMARY 
+add  CONTACTREASON_GROUP_ID NUMBER(9);
+alter table FACT_AD_INTERACTION 
+add  CONTACTREASON_GROUP_ID NUMBER(9);"
 
 create_sql_module $SQL_MODULE $REVISION "$SQL"

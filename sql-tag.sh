@@ -160,7 +160,7 @@ declare -a DISPLAY_NAMES=('SBank Contact Reasons'
 #					   ']' 
 #					']')
 #
-SQL=$(generate_tag)
+SQL=$(generate_tag $1)
 echo "$SQL"
 create_sql_module $SQL_MODULE $REVISION "$SQL"
 

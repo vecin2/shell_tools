@@ -4,7 +4,7 @@
 . ./sql-tag-base.sh
 
 SQL_MODULE=/SGroupContactHistory/sqlScripts/oracle/updates/SG0_3/CreateTagSbankContactReasons
-REVISION=410
+REVISION=521
 
 #MM/DD/YYYY HH:MI:SS AM
 DATE="04/17/2017"
@@ -160,7 +160,7 @@ declare -a DISPLAY_NAMES=('SBank Contact Reasons'
 #					   ']' 
 #					']')
 #
-SQL=$(generate_tag)
+SQL=$(generate_tag $1)
 echo "$SQL"
 create_sql_module $SQL_MODULE $REVISION "$SQL"
 

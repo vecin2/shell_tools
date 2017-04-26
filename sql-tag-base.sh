@@ -142,9 +142,14 @@ generate_tag(){
 	TAG_BREAKER="----------------NEW TAG------------------"
 	ARRAY_LENGTH=${#DISPLAY_NAMES[@]}
 	TAG_ID=$(echo ${DISPLAY_NAMES[0]} | sed 's/ //g')
-	RANDOM_STR=$(echo $(head /dev/urandom | tr -dc a-z | head -c 3))
-	TRUNC_TAG_ID=${TAG_ID:0:6}$RANDOM_STR
-	TAGSET_ID=$(echo "$TRUNC_TAG_ID" | awk '{print tolower($0)}')
+
+	if [ $# -eq 1 ];then
+		TAGSET_ID=$1
+	else
+		RANDOM_STR=$(echo $(head /dev/urandom | tr -dc a-z | head -c 3))
+		TRUNC_TAG_ID=${TAG_ID:0:6}$RANDOM_STR
+		TAGSET_ID=$(echo "$TRUNC_TAG_ID" | awk '{print tolower($0)}')
+	fi
 
 	number_of_tags
 	generate_root_tag
@@ -153,7 +158,7 @@ generate_tag(){
 
 	declare -a TAG_IDS
 	COUNTER=1
-	ASSIGNED_IDS=('hola' 'adios')
+	declare -a ASSIGNED_IDS
 	while [ $COUNTER -lt $ARRAY_LENGTH ]; do
 		if is_tag; then
 			#SANITISE_ID=$(echo ${DISPLAY_NAMES[$COUNTER]} | sed 's/ //g' | sed 's/-//g'| sed 's,/,,g'| sed 's/(//g' | sed 's/)//g')
