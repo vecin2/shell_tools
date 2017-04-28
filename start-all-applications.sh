@@ -1,5 +1,5 @@
 #!/bin/sh
-./ccadmin.sh start-all-appservers
+./start-all-appservers.sh
 
 #cd ../../WebSelfService/trunk/bin/
 #./ccadmin.sh start-all-appservers
