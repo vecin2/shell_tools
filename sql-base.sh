@@ -7,13 +7,19 @@ create_sql_module(){
 	SQL_MODULE=$1
 	REVISION=$2
 	SQL=$3
+	MODIFY_SCHEMA=$4
 	echo   "Creating sql module with sql: $SQL"
 	SQL_PATH=$CORE_HOME/modules/$SQL_MODULE
 	mkdir -p $SQL_PATH
 
 	echo PROJECT \$Revision: $REVISION \$ > $SQL_PATH/update.sequence 
-	echo   "$SQL" > $SQL_PATH/tableData.sql
-	vi $SQL_PATH/tableData.sql
+	if $MODIFY_SCHEMA;then
+		FILE_NAME=createTables.sql
+	else
+		FILE_NAME=tableData.sql
+	fi
+	echo   "$SQL" > $SQL_PATH/$FILE_NAME
+	vi $SQL_PATH/$FILE_NAME
 	echo $SQL_PATH/tableData.sql
 }
 
@@ -26,3 +32,7 @@ update_pd_config(){
 }
 
 
+parse_template(){
+	FILE_CONTENT=$(cat ./sql/$1)
+	echo "$(eval "echo \"$FILE_CONTENT\"")"
+}
