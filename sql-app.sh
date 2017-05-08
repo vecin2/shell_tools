@@ -23,7 +23,8 @@ show_menu(){
 	pd. Process Descriptor
 	am. Add monitor
 	rm. Remove monitor
-	ms. Modify Schema"
+	ms. Modify Schema
+	cs. Custom Script"
 	read -p "Please enter option number: " OPTION
 	printf '\n'
 }
@@ -75,6 +76,7 @@ while  [ "$OPTION" != "x" ];do
 	case $OPTION in
 		[x]* )  return ;;
 		[ms]* ) MODIFY_SCHEMA=true; break ;; 
+		[cs]* ) break ;; 
 		[pd]* ) generate add_process_descriptor ;;
 		[am]* ) generate add_monitor ;;
 		[rm]* ) generate remove_monitor ;;

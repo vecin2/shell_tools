@@ -13,7 +13,7 @@ create_sql_module(){
 	mkdir -p $SQL_PATH
 
 	echo PROJECT \$Revision: $REVISION \$ > $SQL_PATH/update.sequence 
-	if $MODIFY_SCHEMA;then
+	if [ "$MODIFY_SCHEMA" = true ]; then
 		FILE_NAME=createTables.sql
 	else
 		FILE_NAME=tableData.sql
