@@ -1,11 +1,9 @@
-#!/bin/sh
+#!/bin/bash
 . ./configuration.sh
 
-if [ "$#" -ne 1 ]; 
-then
-  REPO_PATH=$MODULES_PREFIX
+if [ "$#" -ne 1 ]; then
+  ST_PATH=../repository/default/$MODULES_PREFIX*
 else
-  REPO_PATH=$1
+  ST_PATH=$1
 fi
-svn status ../repository/default/$REPO_PATH*
-
+svn st $ST_PATH
