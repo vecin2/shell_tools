@@ -1,2 +1,3 @@
-delete from FR_MONITOR where REPOSITORY_PATH ='AddCoreChannelsReportingFacts.Implementation.Monitors.InteractionSummaryFactMonitor';
-delete from EVA_DYNAMIC_VERB_LIST where ID = @EDVL.StartInteractionSummaryFactMonitor;
+
+delete from FR_MONITOR where REPOSITORY_PATH ='$REPOSITORY_PATH';
+delete from EVA_DYNAMIC_VERB_LIST where ID = @EDVL.$DYNAMIC_VERB_ID_LIST;

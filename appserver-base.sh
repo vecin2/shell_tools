@@ -44,6 +44,6 @@ run_app(){
 		pool_server_until_up
 	fi
 	if [ $? -eq 0 ]; then
-		chromium-browser $1
+		eval '$1 $3'
 	fi
 }

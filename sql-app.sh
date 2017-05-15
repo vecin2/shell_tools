@@ -59,7 +59,7 @@ add_monitor(){
 	#add_process_descriptor
 }
 remove_monitor(){
-	read_value "Monitor repo path" REPOSITORY_PATH	
+	read_value "Monitor repo path(e.g Common.Implementation.Monitor)" REPOSITORY_PATH	
 	read_value DYNAMIC_VERB_ID_LIST DYNAMIC_VERB_ID_LIST
 	parse_template remove-monitor.sql
 }

@@ -2,4 +2,4 @@
 
 . ./appserver-base.sh 
 
-run_app http://localhost:8280/jasperserver-pro
+run_app chromium-browser http://localhost:8282/jasperserver-pro
