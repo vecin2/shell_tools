@@ -44,6 +44,6 @@ run_app(){
 		pool_server_until_up
 	fi
 	if [ $? -eq 0 ]; then
-		eval '$1 $3'
+		eval '$1 $2'
 	fi
 }

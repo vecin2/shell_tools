@@ -16,7 +16,9 @@ else
 	return 1
 fi
 
-FILE_NAME=migration.jar
+FILE_NAME=tags.jar
+#DOMAIN="Content,Business Configuration"
+DOMAIN="S Group Tags"
 MIGRATION_PATH=$CORE_HOME/migration
 EXPORT_LOCATION=$MIGRATION_PATH/exportedMigration
 EXTRACT_NAME=migration
@@ -32,7 +34,7 @@ if [ $UPDATE_DB = true ]; then
 fi
 
 echo "\n Exporting data"
-./ccadmin.sh export-data -DfromDate=$FROM_DATE -DexportLocation=$EXPORT_LOCATION -Ddomain="Content,Business Configuration" -DclearExportLocation=true
+./ccadmin.sh export-data -DfromDate=$FROM_DATE -DexportLocation=$EXPORT_LOCATION -Ddomain="$DOMAIN" -DclearExportLocation=true
 
 
 if [ -z ${FULL_EXTRACT_PATH} ]; then
@@ -63,12 +65,12 @@ fi
 read -p  "Do you want to import jar to check if there is any errors(y/n)?" choice
 case $choice in
 	[Yy]* ) echo Importing $JAR_FILE_PATH;cd $CORE_HOME/bin;./ccadmin.sh import-data -DimportLocation=$JAR_FILE_PATH; ;;
-	esac
+esac
 
-if [ $? -eq 0 ];then
-read -p  "Do you want to commit $FILE_NAME(y/n)?" choice
-case $choice in
-	[Yy]* ) read -p "Please enter commit message: " MESSAGE;cd $CORE_HOME;svn ci $JAR_FILE_PATH -m "$MESSAGE"; ;;
+if [ $? -eq 0 ]; then
+	read -p  "Do you want to commit $JAR_FILE_PATH(y/n)?" choice
+	case $choice in
+		[Yy]* ) read -p "Please enter commit message: " MESSAGE;cd $CORE_HOME;svn ci $JAR_FILE_PATH -m "$MESSAGE"; ;;
 	esac
 fi
 return $?

@@ -1,5 +1,6 @@
 #!/bin/bash
 
 . ./appserver-base.sh 
-
-run_app chromium-browser http://localhost:8282/jasperserver-pro
+BROWSER=chromium-browser
+URL=http://localhost:8280/jasperserver-pro
+run_app $BROWSER $URL
