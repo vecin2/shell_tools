@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 . ./configuration.sh
 
 . ./file-system-util.sh
@@ -51,7 +51,10 @@ else
 
 	#function within file imported
 	echo Reviewing list of files exported:
-	prompt_remove_files "$EXPORT_LOCATION/*.json"
+	if ! prompt_remove_files "/opt/verint/verint_projects/trunk/migration/exportedMigration/*.json"; then
+		echo "No files have been exported. Please make sure there are changes made for that date and domain."
+		exit 1
+	fi
 
 	echo  "\n  Overriding current migration files with exported ones (ignoring $EXPORT_LOCATION/META_INF)"
 	rm -r $EXPORT_LOCATION/META-INF
