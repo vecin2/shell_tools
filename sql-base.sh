@@ -5,7 +5,7 @@
 
 create_sql_module(){
 	SQL_MODULE=$1
-	REVISION=$2
+	REVISION=$(./print_next_rev_number.sh)
 	SQL=$3
 	MODIFY_SCHEMA=$4
 	echo   "Creating sql module with sql: $SQL"

@@ -7,8 +7,11 @@ BASE_TEMP_PATH=$CORE_HOME/patches/tempPatch/
 TEMP_PATH=$BASE_TEMP_PATH/$PATCH_NAME
 PATCH_REPO_PATH=$TEMP_PATH/core/repository/default/
 
-mkdir -p $PATCH_REPO_PATH
-mkdir $BASE_TEMP_PATH/META-INF
+if [ -d "$TEMP_PATH" ]; then
+	rm -rf $TEMP_PATH
+fi
+
+mkdir -p $PATCH_REPO_PATH/META_INF
 echo $PATCH_NAME >  $BASE_TEMP_PATH/META-INF/patch.index
 
 cd ../repository/default

@@ -3,14 +3,14 @@
 
 . ./sql-base.sh
 
-if [ $# -ne 2 ]; then
+if [ $# -ne 1 ]; then
 	echo Usage:
 	echo " module: (e.g SGroupContactHistory/sqlScripts/oracle/updates/SG0_3/IncreaseDisplaySpaceContactReasons2)"
-	echo " update sequence number"
 	exit 1
 fi
+
 MODULE=$1
-REVISION=$2
+REVISION=$(./print_next_rev_number.sh)
 
 echo "Welcome!"
 
