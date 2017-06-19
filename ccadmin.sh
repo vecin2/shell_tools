@@ -1,5 +1,6 @@
 #!/bin/sh
-
+JAVA_HOME="/opt/installers/jdk1.8.0_121"
+export JAVA_HOME
 ## resolve links - $0 may be a link to ant's home
 PRG="$0"
 

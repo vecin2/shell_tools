@@ -2,6 +2,7 @@
 #read -e -p 
 
 . ./sql-base.sh
+. ./svn-rev-number.sh
 
 if [ $# -ne 1 ]; then
 	echo Usage:
@@ -10,9 +11,9 @@ if [ $# -ne 1 ]; then
 fi
 
 MODULE=$1
-REVISION=$(./print_next_rev_number.sh)
+REVISION=$(svn_rev_number)
 
-echo "Welcome!"
+echo "Welcome! Current rev number is $REVISION"
 
 echo "The sql will be generated in  $MODULE/tableData.sql"
 
