@@ -1,9 +1,14 @@
 #!/bin/bash
 . ./configuration.sh
 
+REPO_PATH=../repository/default/
 if [ "$#" -ne 1 ]; then
-  ST_PATH=../repository/default/$MODULES_PREFIX*
+  ST_PATH=$REPO_PATH/$MODULES_PREFIX* 
 else
   ST_PATH=$1
+fi
+
+if [ -d $REPO_PATH/TestTools ]; then
+	ST_PATH="$ST_PATH $REPO_PATH/TestTools"
 fi
 svn st $ST_PATH

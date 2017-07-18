@@ -1,6 +1,5 @@
 #!/bin/sh
-JAVA_HOME="/opt/installers/jdk1.8.0_121"
-export JAVA_HOME
+
 ## resolve links - $0 may be a link to ant's home
 PRG="$0"
 
@@ -24,6 +23,10 @@ CCADMIN_HOSTNAME=`hostname | cut -f1 -d'.'`
 
 [ -r $CORE_HOME/config/project.environment ] && . $CORE_HOME/config/project.environment
 [ -r $HOME/.kana/ccadmin.environment ] && . $HOME/.kana/ccadmin.environment
+
+if [ -d "/usr/java8_64" ]; then
+  export JAVA_HOME="/usr/java8_64"
+fi
 
 if [ -z "$JAVA_HOME" ]; then
     echo "Please setup the environment variable JAVA_HOME to point to a valid Java installation"

@@ -16,10 +16,10 @@ else
 	return 1
 fi
 
-FILE_NAME=tags.jar
+FILE_NAME=migration-3PDCaseType.jar
+MIGRATION_PATH=$CORE_HOME/project/migration-jar
 #DOMAIN="Content,Business Configuration"
-DOMAIN="S Group Tags"
-MIGRATION_PATH=$CORE_HOME/migration
+DOMAIN="Business Configuration"
 EXPORT_LOCATION=$MIGRATION_PATH/exportedMigration
 EXTRACT_NAME=migration
 JAR_FILE_PATH=$MIGRATION_PATH/$FILE_NAME
@@ -33,7 +33,7 @@ if [ $UPDATE_DB = true ]; then
 	$CORE_HOME/bin/ccadmin.sh upgrade-database
 fi
 
-echo "\n Exporting data"
+echo '\nExporting data'
 ./ccadmin.sh export-data -DfromDate=$FROM_DATE -DexportLocation=$EXPORT_LOCATION -Ddomain="$DOMAIN" -DclearExportLocation=true
 
 

@@ -4,14 +4,18 @@
 . ./sql-base.sh
 . ./svn-rev-number.sh
 
-if [ $# -ne 1 ]; then
+if [ $# -eq 1 ]; then
+	REVISION=$(svn_rev_number)
+elif [ $# -eq 2 ]; then
+	REVISION=$2
+else
 	echo Usage:
 	echo " module: (e.g SGroupContactHistory/sqlScripts/oracle/updates/SG0_3/IncreaseDisplaySpaceContactReasons2)"
+	echo " (optional) revision: (eg. 857)"
 	exit 1
 fi
 
 MODULE=$1
-REVISION=$(svn_rev_number)
 
 echo "Welcome! Current rev number is $REVISION"
 
@@ -22,6 +26,13 @@ show_menu(){
 	echo " What would you like to do?
 	x.  Exit
 	pd. Process Descriptor
+	ee. Extend Entity
+	ape. Add Persistable Entity 
+	ace. Add Child Entity 
+	ue. Update Entity 
+	av. Add verb
+	rv. Rewire verb
+	avp. Add verb to process desc refernce
 	am. Add monitor
 	rm. Remove monitor
 	ar. Add Report
@@ -54,14 +65,79 @@ set_value(){
 	eval "export $1=\"$2\""
 	PLACE_HOLDERS+=($1)
 }
+modify_schema(){
+	read_value TABLE_NAME TABLE_NAME
+	parse_template create-table.sql
+}
+add_process_desc_reference(){
+	read_value PROCESS_DESC_REF_ID PROCESS_DESC_REF_ID
+	read_value PROCESS_DESCRIPTOR_ID PROCESS_DESCRIPTOR_ID $PROCESS_DESC_REF_ID
+	parse_template add-process-desc-reference.sql
+}
 add_process_descriptor(){
-	read_value ID PROCESS_DESCRIPTOR_NAME
+	read_value PROCESS_DESCRIPTOR_NAME PROCESS_DESCRIPTOR_NAME
 	read_value Description PROCESS_DESCRIPTOR_DESCRIPTION 
 	read_value "Repository path" REPOSITORY_PATH
-	read_value "Config process id:" CONFIG_PROCESS_ID
-	read_value "Type id (2=Action, 3=SLA):" TYPE
+	read_value "Config process id" CONFIG_PROCESS_ID NULL
+	read_value "Type id (0=regular process, 2=Action, 3=SLA) - default is 0:" TYPE
 	#echo $(./template-process-descriptor.sh )
 	parse_template add-process-descriptor.sql
+}
+add_standard_verb_path(){
+	set_value CONFIG_PROCESS_ID NULL
+	set_value TYPE 0
+	add_process_descriptor
+
+	set_value PROCESS_DESC_REF_ID $PROCESS_DESCRIPTOR_NAME
+	set_value PROCESS_DESCRIPTOR_ID $PROCESS_DESCRIPTOR_NAME
+	add_process_desc_reference
+
+	set_value PROCESS_DESC_REF_ID $PROCESS_DESC_REF_ID
+}
+add_verb(){
+	add_standard_verb_path
+	add_verb_to_pdr
+}
+rewire_verb(){
+	add_standard_verb_path
+	read_value ENTITY_DEF_ID ENTITY_DEF_ID
+	read_value VERB_NAME VERB_NAME
+	parse_template rewire-verb.sql
+}
+add_verb_to_pdr(){
+	read_value VERB_ID VERB_ID $PROCESS_DESCRIPTOR_NAME
+	read_value VERB_NAME VERB_NAME
+	read_value ENTITY_DEF_ID ENTITY_DEF_ID
+	read_value PROCESS_DESC_REF_ID PROCESS_DESC_REF_ID
+	read_value "IS_INSTANCE (Y/N)" IS_INSTANCE
+	read_value IS_USER_VISIBLE IS_USER_VISIBLE
+	read_value RECORD_FOR_WRAPUP RECORD_FOR_WRAPUP
+	read_value "IS_LAUNCHABLE_TASK(please enter with ' -->'Y'/'N'):" IS_LAUNCHABLE_TASK "NULL"
+	parse_template add-verb.sql
+}
+extend_entity(){
+	set_value SUPER_ENTITY_DEFINITION NULL
+	read_value "NEW_BASE_ENTITY (e.g BaseContact)" NEW_BASE_ENTITY
+	read_value "LOGICAL_OBJ_PATH (e.g CoreContactHistory.Implementation.Contact.Contact)" LOGICAL_OBJ_PATH
+	read_value "INTERFACE_PATH (e.g CoreContactHistory.API.Interfaces.EIContact)" INTERFACE_PATH
+}
+add_persistable_entity(){
+	set_value SUPER_ENTITY_DEFINITION PersistableEntity
+	add_child_entity
+}
+add_child_entity(){
+	read_value ENTITY_ID ENTITY_ID
+	read_value LOGICAL_OBJ_PATH LOGICAL_OBJ_PATH
+	read_value INTERFACE_PATH INTERFACE_PATH
+	read_value SUPER_ENTITY_DEFINITION SUPER_ENTITY_DEFINITION
+	parse_template add-entity-definition.sql
+}
+update_entity(){
+	read_value LOGICAL_OBJ_PATH LOGICAL_OBJ_PATH
+	read_value INTERFACE_PATH INTERFACE_PATH
+	read_value ENTITY_NAME ENTITY_NAME
+	read_value ENTITY_ID ENTITY_ID
+	parse_template update-entity.sql
 }
 add_monitor(){
 	read_value MONITOR_ID MONITOR_ID
@@ -119,21 +195,27 @@ show_menu
 SEPARATOR=$'\n\n\n'
 while  [ "$OPTION" != "x" ];do 
 	case $OPTION in
-		x  )  return ;;
-		ms ) MODIFY_SCHEMA=true; break ;; 
-		cs ) break ;; 
-		pd ) generate add_process_descriptor ;;
-		am ) generate add_monitor ;;
-		ar ) generate add_report ;;
-		ae ) generate add_entitlement ;;
-		me ) generate map_entitlement ;;
-		rm ) generate remove_monitor ;;
-		*  ) echo Please enter a valid option ;;
+		x   )  return ;;
+		ms  ) generate modify_schema ; FILE_NAME=createTables.sql ; break ;; 
+		cs  ) break ;; 
+		pd  ) generate add_process_descriptor ;;
+		ee  ) generate extend_entity ;;
+		ape ) generate add_persistable_entity ;;
+		ace ) generate add_child_entity ;;
+		ue  ) generate update_entity ;;
+		av  ) generate add_verb ;;
+		rv  ) generate rewire_verb ;;
+		avp ) generate add_verb_to_pdr ;;
+		am  ) generate add_monitor ;;
+		ar  ) generate add_report ;;
+		ae  ) generate add_entitlement ;;
+		me  ) generate map_entitlement ;;
+		rm  ) generate remove_monitor ;;
+		*   ) echo Please enter a valid option ;;
        	esac
 	show_menu
 done
 
 
 echo $SQL
-echo creating module with modify schema: $MODIFY_SCHEMA
-create_sql_module $MODULE $REVISION "$SQL" $MODIFY_SCHEMA
+create_sql_module $MODULE $REVISION "$SQL" $FILE_NAME

@@ -7,20 +7,18 @@ create_sql_module(){
 	SQL_MODULE=$1
 	REVISION=$2
 	SQL=$3
-	MODIFY_SCHEMA=$4
+	FILE_NAME=$4
 	echo   "Creating sql module with sql: $SQL"
 	SQL_PATH=$CORE_HOME/modules/$SQL_MODULE
 	mkdir -p $SQL_PATH
 
 	echo PROJECT \$Revision: $REVISION \$ > $SQL_PATH/update.sequence 
-	if [ "$MODIFY_SCHEMA" = true ]; then
-		FILE_NAME=createTables.sql
-	else
+	if [ -z "$FILE_NAME" ]; then
 		FILE_NAME=tableData.sql
 	fi
 	echo   "$SQL" > $SQL_PATH/$FILE_NAME
 	vi $SQL_PATH/$FILE_NAME
-	echo $SQL_PATH/tableData.sql
+	echo $SQL_PATH/$FILE_NAME
 }
 
 delete_verb(){
@@ -33,6 +31,11 @@ update_pd_config(){
 
 
 parse_template(){
-	FILE_CONTENT=$(cat ./sql/$1)
-	echo "$(eval "echo \"$FILE_CONTENT\"")"
+	if [ -f ./sql/$1 ]; then
+		FILE_CONTENT=$(cat ./sql/$1)
+		echo "$(eval "echo \"$FILE_CONTENT\"")"
+	else
+		echo "Template ./sql/$1 does not exist"
+		return 1
+	fi
 }
