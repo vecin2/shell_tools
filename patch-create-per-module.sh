@@ -21,6 +21,8 @@ echo "MODULE_PATH is $MODULE_PATH, MODULE_DIR is $MODULE_DIR and MODULE_NAME is 
 mkdir -p $PATCH_REPO_PATH
 mkdir $BASE_TEMP_PATH/META-INF
 echo $PATCH_NAME >  $BASE_TEMP_PATH/META-INF/patch.index
+echo "Please describe the patch within this README.txt file which will be included within the patch" > $BASE_TEMP_PATH/README.txt
+vi $BASE_TEMP_PATH/README.txt 
 
 cd $MODULE_DIR
 FILES=$(svn st $MODULE_NAME | grep -v .properties | awk '{print $2}')
@@ -35,11 +37,10 @@ if [ -f ../${PATCH_NAME}.zip ]; then
 	echo zip file already exist, removing existing one
 	rm ../${PATCH_NAME}.zip
 else
-	echo Updating index withn META-INF
-	cd $CORE_HOME/patches
-	echo $PATCH_NAME >> META-INF/patch.index
+	echo Updating index within META-INF
+	echo $PATCH_NAME >> $CORE_HOME/patches/META-INF/patch.index
 fi
-
+echo Zipping current directory $(pwd)
 zip -r ../$PATCH_NAME.zip . > /dev/null  2>&1
 
 rm -r $BASE_TEMP_PATH
