@@ -1,8 +1,6 @@
 #!/bin/sh
 
-. ./appserver-base.sh
-
 ./ad-kill-session.sh
-./ccadmin.sh start-appserver
+./start-app-server.sh
 
 ./ad-run.sh
