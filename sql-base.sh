@@ -17,7 +17,7 @@ create_sql_module(){
 		FILE_NAME=tableData.sql
 	fi
 	echo   "$SQL" > $SQL_PATH/$FILE_NAME
-	vi $SQL_PATH/$FILE_NAME
+	#vi $SQL_PATH/$FILE_NAME
 	echo $SQL_PATH/$FILE_NAME
 }
 
