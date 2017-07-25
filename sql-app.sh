@@ -211,7 +211,7 @@ while  [ "$OPTION" != "x" ];do
 		ae  ) generate add_entitlement ;;
 		me  ) generate map_entitlement ;;
 		rm  ) generate remove_monitor ;;
-		*   ) echo Please enter a valid option ;;
+		*   ) echo Option $OPTION is not valid. Please enter a valid option ;;
        	esac
 	show_menu
 done
