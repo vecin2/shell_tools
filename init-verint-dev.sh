@@ -7,5 +7,5 @@
 
 ./start-all-applications.sh
 
-./jasper-run.sh
+./ad-run.sh
 
