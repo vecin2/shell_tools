@@ -1,7 +1,8 @@
 #!/bin/bash
 #read -e -p 
 
-. ./sql-base.sh
+. ./sql/sql-base.sh
+. ./sql/template_value_builder.sh
 . ./svn-rev-number.sh
 
 if [ $# -eq 1 ]; then
@@ -43,49 +44,27 @@ show_menu(){
 	read -p "Please enter option number: " OPTION
 	printf '\n'
 }
-prompt_enter_value(){
-	LABEL=$1
-	if [ "$3" ]; then
-		DEFAULT_VALUE=$3
-		LABEL="${LABEL} (default is $DEFAULT_VALUE)"
-	fi	
-	read -p "$LABEL:" VALUE
-	if [[ -z "$VALUE" ]]; then
-		VALUE=$DEFAULT_VALUE
-	fi
-	set_value "$2" "$VALUE"
-}
-read_value(){
-	#if place holders contains the variable--> if the variable has not yet been initialized
-	if [[ ! " ${PLACE_HOLDERS[@]} " =~ " $2 " ]]; then
-		prompt_enter_value "$1" "$2" "$3"
-	fi
-}
-set_value(){
-	eval "export $1=\"$2\""
-	PLACE_HOLDERS+=($1)
-}
 modify_schema(){
-	read_value TABLE_NAME TABLE_NAME
+	read_value table_name table_name
 	parse_template create-table.sql
 }
 add_process_desc_reference(){
-	read_value PROCESS_DESC_REF_ID PROCESS_DESC_REF_ID
-	read_value PROCESS_DESCRIPTOR_ID PROCESS_DESCRIPTOR_ID $PROCESS_DESC_REF_ID
+	read_value process_desc_ref_id process_desc_ref_id
+	read_value process_descriptor_id process_descriptor_id $process_desc_ref_id
 	parse_template add-process-desc-reference.sql
 }
 add_process_descriptor(){
-	read_value PROCESS_DESCRIPTOR_NAME PROCESS_DESCRIPTOR_NAME
-	read_value Description PROCESS_DESCRIPTOR_DESCRIPTION 
-	read_value "Repository path" REPOSITORY_PATH
-	read_value "Config process id" CONFIG_PROCESS_ID NULL
-	read_value "Type id (0=regular process, 2=Action, 3=SLA) - default is 0:" TYPE
+	read_value process_descriptor_name process_descriptor_name
+	read_value description process_descriptor_description 
+	read_value "repository path" repository_path
+	read_value "config process id" config_process_id null
+	read_value "type id (0=regular process, 2=action, 3=sla) - default is 0:" type
 	#echo $(./template-process-descriptor.sh )
 	parse_template add-process-descriptor.sql
 }
 add_standard_verb_path(){
-	set_value CONFIG_PROCESS_ID NULL
-	set_value TYPE 0
+	set_value config_process_id null
+	set_value type 0
 	add_process_descriptor
 
 	set_value PROCESS_DESC_REF_ID $PROCESS_DESCRIPTOR_NAME

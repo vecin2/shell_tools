@@ -21,21 +21,14 @@ create_sql_module(){
 	echo $SQL_PATH/$FILE_NAME
 }
 
-delete_verb(){
-	echo "delete from EVA_VERB_LOC where id =$1;
-	delete from EVA_VERB where id =$1;"
-}
-update_pd_config(){
-	echo "update EVA_PROCESS_DESCRIPTOR set (CONFIG_PROCESS_ID)= ($1) where id = $2"
-}
-
 
 parse_template(){
-	if [ -f ./sql/$1 ]; then
-		FILE_CONTENT=$(cat ./sql/$1)
+	TEMPLATES_PATH="./sql/templates/"
+	if [ -f $TEMPLATES_PATH$1 ]; then
+		FILE_CONTENT=$(cat $TEMPLATES_PATH$1)
 		echo "$(eval "echo \"$FILE_CONTENT\"")"
 	else
-		echo "Template ./sql/$1 does not exist"
+		echo "Template $TEMPLATES_PATH$1 does not exist"
 		return 1
 	fi
 }

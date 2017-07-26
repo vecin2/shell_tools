@@ -1,4 +1,4 @@
 #!/bin/sh
 
-vi $(./lastProcessLog.sh $1)
+vi +?ERROR  $(./lastProcessLog.sh $1)
 
