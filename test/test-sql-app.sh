@@ -23,7 +23,7 @@ T_add_persistable_entity(){
 					 $TMY_ENTITY
 					 $TLOGICAL_OBJ_PATH
 					 $TINTERFACE_PATH
-					 $TOPTION2" | ./sql-app.sh $MODULE_PATH 123 
+					 $TOPTION2" | ./sql-app.sh $MODULE_PATH 123 > /dev/null > 2>&1
 
 	ACTUAL_SQL=$(cat $FILE_PATH)
 
