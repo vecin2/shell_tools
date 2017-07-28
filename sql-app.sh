@@ -96,9 +96,14 @@ add_verb_to_pdr(){
 }
 extend_entity(){
 	set_value SUPER_ENTITY_DEFINITION NULL
-	read_value "NEW_BASE_ENTITY (e.g BaseContact)" NEW_BASE_ENTITY
-	read_value "LOGICAL_OBJ_PATH (e.g CoreContactHistory.Implementation.Contact.Contact)" LOGICAL_OBJ_PATH
-	read_value "INTERFACE_PATH (e.g CoreContactHistory.API.Interfaces.EIContact)" INTERFACE_PATH
+	read_value "Entity name you would like to extend(e.g CustomerED)" ENTITY_NAME_TO_EXTEND
+	read_value "Interface path you would like to override (e.g. CoreEntities.API.Interfaces.EICustomer)" INTERFACE_PATH
+	read_value "Logical object path you would like to override(e.g CoreEntities.Implementation.Customer.Customer)" LOGICAL_OBJ_PATH
+	read_value "New entity id (@ED. will prefix to your entry)" ENTITY_ID
+	read_value "New Interface path (e.g. SPENCustomer.API.EISPENCustomer)" EXT_INTERFACE_PATH
+	read_value "New logical object path (e.g SPENCustomer.Implementation.Customer.Objects.SpenCustomer)" EXT_LOGICAL_OBJ_PATH
+	set_value ENTITY_NAME "Base$ENTITY_NAME_TO_EXTEND"
+	parse_template extend-entity.sql
 }
 add_persistable_entity(){
 	set_value SUPER_ENTITY_DEFINITION PersistableEntity
