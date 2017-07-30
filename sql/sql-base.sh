@@ -26,7 +26,8 @@ parse_template(){
 	TEMPLATES_PATH="./sql/templates/"
 	if [ -f $TEMPLATES_PATH$1 ]; then
 		FILE_CONTENT=$(cat $TEMPLATES_PATH$1)
-		echo "$(eval "echo \"$FILE_CONTENT\"")"
+		LAST_PARSED_VALUE="$(eval "echo \"$FILE_CONTENT\"")"
+		echo $LAST_PARSED_VALUE
 	else
 		echo "Template $TEMPLATES_PATH$1 does not exist"
 		return 1

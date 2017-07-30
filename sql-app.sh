@@ -2,7 +2,7 @@
 #read -e -p 
 
 . ./sql/sql-base.sh
-. ./sql/template_value_builder.sh
+. ./sql/template-value-builder.sh
 . ./svn-rev-number.sh
 
 if [ $# -eq 1 ]; then
@@ -165,7 +165,9 @@ add_entitlement(){
 generate(){
 	read -p "Please enter a comment for this script:" COMMENT
 	SQL_COMMENT="--$COMMENT"
-	CURRENT_SQL="$($1)"; echo "Generating SQL:\n $CURRENT_SQL"; SQL=$SQL$SQL_COMMENT$'\n'$CURRENT_SQL$SEPARATOR; 
+	#Invokes methods which inside will call parse_template which sets the variable LAST_PARSED_TEMPLATE
+	"$1"
+ 	printf "Generating SQL:\n $LAST_PARSED_TEMPLATE"; SQL=$SQL$SQL_COMMENT$'\n'$LAST_PARSED_TEMPLATE$SEPARATOR; 
 	PLACE_HOLDERS=()
 }
 map_entitlement(){
