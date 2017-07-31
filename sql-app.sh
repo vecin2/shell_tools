@@ -45,26 +45,25 @@ show_menu(){
 	printf '\n'
 }
 modify_schema(){
-	read_value table_name table_name
+	read_value TABLE_NAME TABLE_NAME
 	parse_template create-table.sql
 }
 add_process_desc_reference(){
-	read_value process_desc_ref_id process_desc_ref_id
-	read_value process_descriptor_id process_descriptor_id $process_desc_ref_id
+	read_value PROCESS_DESC_REF_ID PROCESS_DESC_REF_ID
+	read_value PROCESS_DESCRIPTOR_ID PROCESS_DESCRIPTOR_ID $PROCESS_DESC_REF_ID
 	parse_template add-process-desc-reference.sql
 }
 add_process_descriptor(){
-	read_value process_descriptor_name process_descriptor_name
-	read_value description process_descriptor_description 
-	read_value "repository path" repository_path
-	read_value "config process id" config_process_id null
-	read_value "type id (0=regular process, 2=action, 3=sla) - default is 0:" type
-	#echo $(./template-process-descriptor.sh )
+	read_value PROCESS_DESCRIPTOR_NAME PROCESS_DESCRIPTOR_NAME
+	read_value DESCRIPTION PROCESS_DESCRIPTOR_DESCRIPTION 
+	read_value "REPOSITORY PATH" REPOSITORY_PATH
+	read_value "CONFIG PROCESS ID" CONFIG_PROCESS_ID NULL
+	read_value "type id (0=regular process, 2=action, 3=sla) - default is 0:" TYPE
 	parse_template add-process-descriptor.sql
 }
 add_standard_verb_path(){
-	set_value config_process_id null
-	set_value type 0
+	set_value CONFIG_PROCESS_ID NULL
+	set_value TYPE 0
 	add_process_descriptor
 
 	set_value PROCESS_DESC_REF_ID $PROCESS_DESCRIPTOR_NAME
@@ -78,6 +77,7 @@ add_verb(){
 	add_verb_to_pdr
 }
 rewire_verb(){
+	printf "Enter values for new verb:\n"
 	add_standard_verb_path
 	read_value ENTITY_DEF_ID ENTITY_DEF_ID
 	read_value VERB_NAME VERB_NAME
@@ -129,8 +129,6 @@ add_monitor(){
 	read_value START_REPO_PATH START_REPO_PATH
 	read_value "SEQUENCE_NO from EVA_DYNAMIC_VERB_LIST" SEQUENCE_NO
 	parse_template add-monitor.sql
-        #set_value TYPE 0
-	#add_process_descriptor
 }
 remove_monitor(){
 	read_value "Monitor repo path(e.g Common.Implementation.Monitor)" REPOSITORY_PATH	
@@ -142,8 +140,6 @@ add_report(){
 	read_value "MENU_ID (default OpPerformanceReports)" MNI_ID OpPerformanceReports
 	read_value "Report url from (...SGroup_Reporting/Interaction_Reporting/reports)"  REPORT_URL
 	parse_template add-report.sql
-	#read_value REPORT_DISPLAY_NAME REPORT_DISPLAY_NAME 
-	#read_value REPORT_DESCRIPTION REPORT_DESCRIPTION
 	prompt_enter_value "Enter locations (e.g. en-GB,fi-FI)" "LOCALE"
 	IFS=',' read -r -a LOCALES <<< "$LOCALE"
 	for LOCALE_ITEM in "${LOCALES[@]}" 
@@ -167,7 +163,8 @@ generate(){
 	SQL_COMMENT="--$COMMENT"
 	#Invokes methods which inside will call parse_template which sets the variable LAST_PARSED_TEMPLATE
 	"$1"
- 	printf "Generating SQL:\n $LAST_PARSED_TEMPLATE"; SQL=$SQL$SQL_COMMENT$'\n'$LAST_PARSED_TEMPLATE$SEPARATOR; 
+	CURRENT_SQL=$(empty_parse_buffer)
+ 	printf "Generating SQL:\n $CURRENT_SQL"; SQL=$SQL$SQL_COMMENT$'\n'$CURRENT_SQL$SEPARATOR; 
 	PLACE_HOLDERS=()
 }
 map_entitlement(){
@@ -176,6 +173,7 @@ map_entitlement(){
 	prompt_enter_value "ENTIY_TYPE_ID (e.g ProfileType)" ENTITY_TYPE_ID
 	parse_template map-entitlement.sql	
 }
+#main
 PLACE_HOLDERS=()
 show_menu
 SEPARATOR=$'\n\n\n'

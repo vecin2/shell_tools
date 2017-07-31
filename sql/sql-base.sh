@@ -26,10 +26,13 @@ parse_template(){
 	TEMPLATES_PATH="./sql/templates/"
 	if [ -f $TEMPLATES_PATH$1 ]; then
 		FILE_CONTENT=$(cat $TEMPLATES_PATH$1)
-		LAST_PARSED_VALUE="$(eval "echo \"$FILE_CONTENT\"")"
-		echo $LAST_PARSED_VALUE
+		LAST_PARSED_TEMPLATE=$LAST_PARSED_TEMPLATE$(eval "echo \"$FILE_CONTENT\"")
 	else
 		echo "Template $TEMPLATES_PATH$1 does not exist"
 		return 1
 	fi
+}
+empty_parse_buffer(){
+	echo "$LAST_PARSED_TEMPLATE"
+	LAST_PARSED_TEMPLATE=""
 }
