@@ -10,7 +10,13 @@ __failMacro() {
 }
 readonly T_fail='eval __failMacro $BASH_SOURCE:$LINENO'
 
+__get_function(){
+	A=$(declare -F | grep "declare -f $1" | awk '{print $3}')
+	echo $A
+}
+
 main() {
+	echo calling mybasht
 	local run failed start stop duration
 	declare -a processed
 	run=0
@@ -18,7 +24,9 @@ main() {
 	for file in "$@"; do
 		source "$file"
 		for t in $(declare -F | grep 'declare -f T_' | awk '{print $3}'); do
+			
 			if ! __contains "$t" "${processed[@]}"; then
+				$(__get_function "setup")
 				unset __test_status __test_message
 				echo "=== RUN $t"
 				start="$SECONDS"
@@ -34,10 +42,11 @@ main() {
 					failed=$((failed+1))
 					echo "--- FAIL $t (${duration}s)"
 					if [[ "$__test_message" ]]; then
-						echo "    $__test_message"
+						echo -e "    $__test_message"
 						echo
 					fi
 				fi
+				$(__get_function "teardown")
 			fi
 		done
 	done

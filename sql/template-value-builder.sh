@@ -9,7 +9,7 @@ prompt_enter_value(){
 		DEFAULT_VALUE=$3
 		LABEL="${LABEL} (default is $DEFAULT_VALUE)"
 	fi	
-	read -p "$LABEL:" VALUE
+	read -e -p "$LABEL:"  -i "$DEFAULT_VALUE" VALUE
 	while contains "$VALUE" "\*" 
 	do
 		echo Grepping file $CORE_HOME/work/modifiable.id.map.file

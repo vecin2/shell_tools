@@ -55,7 +55,7 @@ assert_equals(){
 	ERROR=$(extract_assert_message "$EXPECTED" "$RESULT" "50")
 	if [[ "$ERROR" != "" ]]; then
 		ERROR="Failed when running \'$SCENARIO\'.$ERROR"
-		$T_fail "${ERROR}"
+		$T_fail "${ERROR} $'\n'Full message is, expected \"$EXPECTED\" $'\n' but was \"$RESULT\""
 		return 1
 	fi
 	return 0
