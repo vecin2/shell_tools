@@ -56,7 +56,16 @@ assert_equals(){
 	if [[ "$ERROR" != "" ]]; then
 		ERROR="Failed when running \'$SCENARIO\'.$ERROR"
 		$T_fail "${ERROR} $'\n'Full message is, expected \"$EXPECTED\" $'\n' but was \"$RESULT\""
+		die "an error has ocurred" 
 		return 1
 	fi
 	return 0
+}
+die() {
+	local frame=0
+	while caller $frame; do
+		((frame++));
+	done
+	echo "$*"
+	#exit 1
 }
