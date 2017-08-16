@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ObjectDefinition>
+<PackageEntry>
+  <ImportDeclaration name="KTestCase">
+    <PackageSpecifier name="">
+      <PackageName name="TestTools"/>
+      <PackageName name="TestUnit"/>
+      <PackageName name="Objects"/>
+    </PackageSpecifier>
+    <PackageEntryReference name="KTestCase"/>
+  </ImportDeclaration>
+  <ObjectDefinition designNotes="Undefined" isPrivate="false" name="TestMyObject" nested="false" version="4.3.0">
+    <Superclass name="KTestCase" nested="false"/>
+  </ObjectDefinition>
+</PackageEntry>

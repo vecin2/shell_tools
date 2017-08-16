@@ -28,7 +28,7 @@ T_rewire_verb(){
 
 	ACTUAL_SQL=$(cat $FILE_PATH)
 
-	assert_sql_equals "$EXPECTED_SQL" "$ACTUAL_SQL" "Testing add persistable entity"
+	assert_equal_sql "$EXPECTED_SQL" "$ACTUAL_SQL" "Testing add persistable entity"
 }
 
 T_add_persistable_entity(){
@@ -58,14 +58,6 @@ T_add_persistable_entity(){
 
 	ACTUAL_SQL=$(cat $FILE_PATH)
 
-	assert_sql_equals "$EXPECTED_SQL" "$ACTUAL_SQL" "Testing add persistable entity"
+	assert_equal_sql "$EXPECTED_SQL" "$ACTUAL_SQL" "Testing add persistable entity"
 }
 
-remove_all_white_spaces(){
-	echo $1 | sed -e 's/ //g'
-}
-assert_sql_equals(){
-	EXPECTED_SQL=$(remove_all_white_spaces "$1")
-	ACTUAL_SQL=$(remove_all_white_spaces "$2")
-	assert_equals "$EXPECTED_SQL" "$ACTUAL_SQL" "$3"
-}

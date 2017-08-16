@@ -69,3 +69,15 @@ die() {
 	echo "$*"
 	#exit 1
 }
+
+remove_all_white_spaces(){
+	echo $1 | sed -e 's/ //g'
+}
+assert_equal_sql(){
+	EXPECTED_SQL=$(remove_all_white_spaces "$1")
+	ACTUAL_SQL=$(remove_all_white_spaces "$2")
+	assert_equals "$EXPECTED_SQL" "$ACTUAL_SQL" "$3"
+}
+assert_equal_xml(){
+	assert_equal_sql "$1" "$2"
+}

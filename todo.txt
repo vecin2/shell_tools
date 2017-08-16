@@ -1,0 +1,17 @@
+sql-app extend entity: adding full @ED.SPENContact  ends in @ET.@EDSPENContact
+sql-app extend entity uses null for super entity definition. This is not always true as for example extending simple case type
+sql-app grepping when ask by id.map.file 
+update project properties
+compute modules directory from module name and release name and name o package
+
+
+Xml
+Interface (import parent inteface and set to exntend)
+object (import extended interface adn set to extend)
+Create module
+Create test packages (test runner, etc)
+
+configuration
+read variables from config core.home
+Create a test process for an objcect
+	

@@ -11,4 +11,6 @@ fi
 if [ -d $REPO_PATH/TestTools ]; then
 	ST_PATH="$ST_PATH $REPO_PATH/TestTools"
 fi
+
+ST_PATH="$ST_PATH ../config/project.properties"
 svn st $ST_PATH
