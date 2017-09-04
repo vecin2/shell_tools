@@ -64,13 +64,19 @@ test_extract_substring_radio(){
 	assert_scenario "$EXPECTED" "$RESULT" "$SCENARI0"
 }
 T_extract_assert_message_in_middle(){
-	test_extract_assert_message "This is just a comment" "This i just a comment" "4" "Expected '...is is jus...' but was '...is i just...'"
+	test_extract_assert_message "This is just a comment" "This i just a comment" "4" "Expected '...is i[s] jus...' but was '...is i[ ]just...'"
 }
 T_extract_assert_message_no_difference(){
 	test_extract_assert_message "This is just a comment" "This is just a comment" "4" ""
 }
 T_extract_assert_message_diff_no_alpha(){
-	test_extract_assert_message "-This is just a comment" "--This is just a comment" "4" "Expected '...-This ...' but was '...--This...'"
+	test_extract_assert_message "-This is just a comment" "--This is just a comment" "4" "Expected '...-[T]his ...' but was '...-[-]This...'"
+}
+T_find_first_difference_index(){
+	a="\"name\""
+	b="\"names\""
+	result=$(find_first_difference_index $a $b)
+	assert_equals "5" $result
 }
 test_extract_assert_message(){
 	RESULT=$(extract_assert_message "$1" "$2" $3)

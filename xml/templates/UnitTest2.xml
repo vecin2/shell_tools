@@ -17,6 +17,7 @@
     <ObjectDefinition
         designNotes="Undefined"
         name="TestClassUnderTest"
+        nested="false"
         version="4.3.0">
       <Superclass
           name="KTestCase"

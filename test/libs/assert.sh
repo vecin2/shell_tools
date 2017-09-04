@@ -33,14 +33,28 @@ extract_substring_radio(){
 	fi
 	echo "${STRING:MIN_DEL:DIAMETER}"
 }
+surround_char_at_index(){
+	string_to_surround=$1
+	index=$2
+	if [ $index -gt -1 ]; then
+		surrounded_char=[${string_to_surround:$index:1}]
+		length=${#string_to_surround}
+		echo ${string_to_surround:0:$index}$surrounded_char${string_to_surround:$index+1:$length-1}
+	fi
+	#echo $string_to_surround
+
+}
 extract_assert_message(){
 	A=$1
 	B=$2
 	RADIO=$3
 	INDEX=$(find_first_difference_index "$A" "$B")
 	if [ $INDEX -gt -1 ]; then
-		RELEVANT_A=$(extract_substring_radio "$A" $INDEX $RADIO)
-		RELEVANT_B=$(extract_substring_radio "$B" $INDEX $RADIO)
+		marked_a=$(surround_char_at_index "$A" $INDEX)
+		marked_b=$(surround_char_at_index "$B" $INDEX)
+		#as we surround char adds two characters at the first difference index, increment index and radio
+		RELEVANT_A=$(extract_substring_radio "$marked_a" $((INDEX+1)) $((RADIO+1)))
+		RELEVANT_B=$(extract_substring_radio "$marked_b" $((INDEX+1)) $((RADIO+1)))
 		RESULT="Expected '...$RELEVANT_A...' but was '...$RELEVANT_B...'"
 	else
 		RESULT=""
@@ -54,9 +68,12 @@ assert_equals(){
 	SCENARIO=$3
 	ERROR=$(extract_assert_message "$EXPECTED" "$RESULT" "50")
 	if [[ "$ERROR" != "" ]]; then
+		diferent_index=$(find_first_difference_index "$EXPECTED" "$RESULT")
 		ERROR="Failed when running \'$SCENARIO\'.$ERROR"
-		$T_fail "${ERROR} $'\n'Full message is, expected \"$EXPECTED\" $'\n' but was \"$RESULT\""
-		die "an error has ocurred" 
+		$T_fail "${ERROR} $'\n'Full message is, expected \"$EXPECTED\" $'\n' but was \"$RESULT\"$'\n' Diferent at index $diferent_index."
+
+		die "an error has ocurred $'\n'" 
+		
 		return 1
 	fi
 	return 0

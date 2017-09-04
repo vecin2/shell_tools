@@ -3,7 +3,8 @@
   <PackageEntry>
     <ImportDeclaration
         name="KTestCase">
-      <PackageSpecifier>
+      <PackageSpecifier
+          name="">
         <PackageName
             name="TestTools" />
         <PackageName
@@ -16,7 +17,9 @@
     </ImportDeclaration>
     <ObjectDefinition
         designNotes="Undefined"
-        name="TestClassUnderTest"
+        isPrivate="false"
+        name="UnitTest"
+        nested="false"
         version="4.3.0">
       <Superclass
           name="KTestCase"
