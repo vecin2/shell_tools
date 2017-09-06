@@ -5,11 +5,10 @@ xml_template_dir=xml/templates
 object_template=$xml_template_dir/Object.xml  
 unit_test_xml(){
 	class_under_test_path=$1
-	class_under_test_file=${class_under_test_path##*/}
-	class_under_test_name=${class_under_test_file%.*}
+	test_class_name=$(generate_test_name class_under_test_path)
 	xml=$(cat xml/templates/Object.xml)
-	set_name "Test$class_under_test_name"
-	import_package /TestTools/TestUnit/Objects/KTestCase
+	set_name $test_class_name
+	import_package "/TestTools/TestUnit/Objects/KTestCase"
 	inherit_from "KTestCase"
 	#import_package $class_under_test
 	#inherit_from /TestTools/TestUnit/Objects/KTestCase 
@@ -22,7 +21,11 @@ unit_test_xml(){
 
 	echo $xml
 }
-
+generate_test_name(){
+	class_under_test_file=${class_under_test_path##*/}
+	class_under_test_name=${class_under_test_file%.*}
+	echo Test$class_under_test_name
+}
 
 
 #add import declaration with name ktestcase
