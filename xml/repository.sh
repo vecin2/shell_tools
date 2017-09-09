@@ -1,5 +1,7 @@
 #!/bash/bin
 
+. ./lib/string_manipulation.sh
+
 unit_test_path(){
 	obj_path=$1
 	module=$(echo $obj_path | awk -F "/Implementation" '{print $1}')
@@ -16,6 +18,7 @@ imp_subpackage(){
 }
 index_of_implementation(){
 	obj_path=$1
+	obj_path=$(sanitise_first_char_separator $obj_path)
 	for folder in ${obj_path//\// }
 	do
 		if [ "$folder" == "Implementation" ]; then

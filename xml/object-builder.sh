@@ -22,12 +22,8 @@ import_package(){
 			xml_package_entry_reference ${array[$index]}	
 		fi
 	done
-	#xml_package_name "TestTools"
-	#xml_package_name "TestUnit"
-	#xml_package_name "Objects"
-	#xml_package_entry_reference "KTestCase"
-
 }
+
 xml_import_declaration(){
 	xml=$(echo $xml | xmlstarlet ed -i '/PackageEntry/ObjectDefinition' -t elem -n ImportDeclaration -v "" -i /PackageEntry/ImportDeclaration -t attr -n name -v $1) 
 }
