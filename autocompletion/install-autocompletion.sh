@@ -3,4 +3,5 @@ if [ -z $AD ]; then
 	exit
 else
 	sudo ln -sfv $AD/shell_tools/autocompletion/ccadmin.sh /etc/bash_completion.d/ccadmin
+	sudo ln -sfv $AD/shell_tools/autocompletion/gt.sh /etc/bash_completion.d/gt
 fi 

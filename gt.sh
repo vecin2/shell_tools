@@ -1,4 +1,4 @@
 #!/bin/bash
 command=$1
 
-./xml/commands/create-unit-test.sh $2
+./xml/commands/$1.sh $2

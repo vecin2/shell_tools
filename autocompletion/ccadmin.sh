@@ -16,4 +16,4 @@ _ccadmin()
 		return 0
 	fi
 }
-complete -F _ccadmin ccadmin
+complete -o default -F _ccadmin ccadmin
