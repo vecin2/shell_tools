@@ -3,8 +3,11 @@
 . ./lib/string_manipulation.sh
 . ./configuration.sh
 
-unit_test_path_full_path(){
-	repo_path=$(unit_test_path $1 $2)
+
+unit_test_full_path(){
+	object_path=$1
+	is_create_subtest_package=$2
+	repo_path=$(unit_test_path $object_path $is_create_subtest_package)
 	echo ${CORE_HOME}repository/default/$repo_path
 }
 unit_test_path(){
