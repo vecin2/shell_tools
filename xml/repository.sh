@@ -1,29 +1,53 @@
 #!/bash/bin
 
 . ./lib/string_manipulation.sh
+. ./configuration.sh
 
+unit_test_path_full_path(){
+	repo_path=$(unit_test_path $1 $2)
+	echo ${CORE_HOME}repository/default/$repo_path
+}
 unit_test_path(){
 	obj_path=$1
-	module=$(echo $obj_path | awk -F "/Implementation" '{print $1}')
-	counter=0
-	imp_subpackage=$(imp_subpackage $obj_path)
-	result=$module/Test/$imp_subpackage/UnitTests
-	echo $result
+	create_test_subpackage=$2
+
+	test_subpackage=$(extract_test_subpackage $obj_path $create_test_subpackage)
+	result=$(extract_module)/Test/${test_subpackage}UnitTests
+
+  echo $result
 }
+
+extract_module(){
+	echo $obj_path | awk -F "/Implementation" '{print $1}'
+}
+
+extract_test_subpackage(){
+	if $2 ; then
+		test_subpackage=$(imp_subpackage $1)/
+	else
+		test_subpackage=""
+	fi
+	echo $test_subpackage
+}
+
 imp_subpackage(){
-	index_of_implementation $1
-	implementation_index=$?
-	let "cut_index=implementation_index +2"
-	echo $obj_path | cut -d '/' -f$cut_index
+	extract_imp_cut_index $1
+	imp_index=$?
+	if [ $imp_index -ne 100 ]; then
+		echo $(echo $obj_path | cut -d '/' -f$((imp_index+1))) 
+	fi
 }
-index_of_implementation(){
-	obj_path=$1
-	obj_path=$(sanitise_first_char_separator $obj_path)
-	for folder in ${obj_path//\// }
-	do
+
+extract_imp_cut_index(){
+	obj_path=$(sanitise_first_char_separator $1)
+	folder=$(echo $obj_path | cut -d '/' -f1)
+	counter=2
+	while [ -n "$folder" ]; do
+		folder=$(echo $obj_path | cut -d '/' -f$counter)
 		if [ "$folder" == "Implementation" ]; then
 			return $counter
 		fi
-		let "counter++"
+		counter=$((counter+1))
 	done
+	return 100
 }

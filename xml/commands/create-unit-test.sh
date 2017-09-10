@@ -6,7 +6,7 @@
 object_path=$1
 object_name=${object_path##*/}
 content=$(unit_test_xml $1)
-test_path=$(unit_test_path $1)
+test_path=$(unit_test_full_path $1)
 repo_path=${CORE_HOME}repository/default
 
 echo object path: $object_path
