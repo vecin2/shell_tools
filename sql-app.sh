@@ -91,7 +91,7 @@ add_verb_to_pdr(){
 	read_value "IS_INSTANCE (Y/N)" IS_INSTANCE
 	read_value IS_USER_VISIBLE IS_USER_VISIBLE
 	read_value RECORD_FOR_WRAPUP RECORD_FOR_WRAPUP
-	read_value "IS_LAUNCHABLE_TASK(please enter with ' -->'Y'/'N'):" IS_LAUNCHABLE_TASK "NULL"
+	read_value "IS_LAUNCHABLE_TASK" IS_LAUNCHABLE_TASK "N"
 	parse_template add-verb.sql
 }
 extend_entity(){

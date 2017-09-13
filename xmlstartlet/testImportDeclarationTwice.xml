@@ -1,0 +1,54 @@
+
+  <PackageEntry>
+    <ImportDeclaration
+        name="KTestCase">
+      <PackageSpecifier
+          name="">
+        <PackageName
+            name="TestTools" />
+        <PackageName
+            name="TestUnit" />
+        <PackageName
+            name="Objects" />
+      </PackageSpecifier>
+      <PackageEntryReference
+          name="KTestCase" />
+    </ImportDeclaration>
+    <ImportDeclaration
+        name="ClassUnderTest">
+      <PackageSpecifier
+          name="">
+        <PackageName
+            name="shelltools" />
+        <PackageName
+            name="Implementation" />
+        <PackageName
+            name="Xml" />
+        <PackageName
+            name="Utils" />
+      </PackageSpecifier>
+      <PackageEntryReference
+          name="ClassUnderTest" />
+    </ImportDeclaration>
+    <ObjectDefinition
+        designNotes="Undefined"
+        isPrivate="false"
+        name="TestClassUnderTest"
+        nested="false"
+        version="4.3.0">
+      <Superclass
+          name="KTestCase"
+          nested="false" />
+      <InstanceFields>
+        <IntegerField
+            designNotes=""
+            isAttribute="false"
+            name="classUnderTest">
+          <IntegerField_loc
+              locale="">
+            <Format />
+          </IntegerField_loc>
+        </IntegerField>
+      </InstanceFields>
+    </ObjectDefinition>
+  </PackageEntry>

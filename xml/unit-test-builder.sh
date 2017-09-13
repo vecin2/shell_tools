@@ -1,16 +1,20 @@
 #!/bin/bash
-. ./xml/object-builder.sh
+. ./xml/object-builder2.sh
 
 xml_template_dir=xml/templates
 object_template=$xml_template_dir/Object.xml  
+
 unit_test_xml(){
 	class_under_test_path=$1
-	test_class_name=$(generate_test_name class_under_test_path)
-	xml=$(cat xml/templates/Object.xml)
-	set_name $test_class_name
+	#test_class_name=$(generate_test_name class_under_test_path)
+	#xml=$(cat xml/templates/Object.xml)
+	xml=$(cat xmlstartlet/testEmpty.xml)
 	import_package "/TestTools/TestUnit/Objects/KTestCase"
+	import_package "/TestTools2/TestUnit2/Objects2/KTestCaseDos"
+	xml_object_definition
+	#set_name $test_class_name
+	#import_package "/shelltools/Implementation/Xml/Utils/ClassUnderTest"
 	inherit_from "KTestCase"
-	#import_package $class_under_test
 	#inherit_from /TestTools/TestUnit/Objects/KTestCase 
 	#add_attribute $class_under_test
 	#add a test method belongs to other method (create_unit_test)
@@ -19,7 +23,7 @@ unit_test_xml(){
 	#run unit test
 	add_square_brackets
 
-	echo $xml
+	#echo $xml
 }
 generate_test_name(){
 	class_under_test_file=${class_under_test_path##*/}

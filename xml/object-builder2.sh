@@ -1,13 +1,10 @@
-#!/bin/bash
 
-set_name(){
-	xml=$(echo $xml | xmlstarlet ed -u 'PackageEntry/ObjectDefinition/@name' -v "$1")
-}
 import_package(){
 	package_path=$1
 	class_name=${package_path##*/}
 	xml_import_declaration "$class_name"
 	xml_package_specifier
+
 
 	array=(${package_path//\// })
 	
@@ -25,10 +22,11 @@ import_package(){
 }
 
 xml_import_declaration(){
-	xml=$(echo $xml | xmlstarlet ed -i '/PackageEntry/ObjectDefinition' -t elem -n ImportDeclaration -v "" -i '//ImportDeclaration[last()]' -t attr -n name -v $1) 
+	xml=$(echo $xml | xmlstarlet ed -s /PackageEntry -t elem -n ImportDeclaration -v "" -i '//ImportDeclaration[last()]' -t attr	-n name -v KTestCase)
 }
 xml_package_specifier(){
-	xml=$(echo $xml | xmlstarlet ed -s /PackageEntry/ImportDeclaration -t elem -n PackageSpecifier -v "" -i //PackageSpecifier -t attr -n name -v "")
+	xml=$(echo $xml | xmlstarlet ed -s /PackageEntry/ImportDeclaration -t elem -n PackageSpecifier -v "")
+	 
 }
 xml_package_name(){
 	xml=$(echo $xml | xmlstarlet ed -s /PackageEntry/ImportDeclaration/PackageSpecifier -t elem -n PackageName -v "" -i '//PackageName[last()]' -t attr -n name -v $1)
@@ -36,12 +34,7 @@ xml_package_name(){
 xml_package_entry_reference(){
 	xml=$(echo $xml | xmlstarlet ed -s /PackageEntry/ImportDeclaration -t elem -n PackageEntryReference -v "" -i '/PackageEntry/ImportDeclaration/PackageEntryReference[last()]' -t attr -n name -v $1)
 }
-add_square_brackets(){
-	xml=$(echo $xml |  sed 's/DOCTYPE ObjectDefinition/DOCTYPE ObjectDefinition []/')
-}	
-inherit_from(){
-	obj_def_path="/PackageEntry/ObjectDefinition"
-	super_class_path=$obj_def_path/Superclass
-	xml=$(echo $xml | xmlstarlet ed -s $obj_def_path -t elem -n Superclass -v "" -i $super_class_path -t attr -n name -v $1 -i $super_class_path -t attr -n nested -v false)
 
+xml_object_definition(){
+	xml=$(echo $xml |  xmlstarlet ed -s PackageEntry -t elem -n ObjectDefinition -v "" -i "//ObjectDefinition" -t attr -n designNotes -v "Undefined" -i "//ObjectDefinition" -t attr -n name -v "TestClassUnderTest" -i "//ObjectDefinition" -t attr -n version -v "4.3.0")
 }

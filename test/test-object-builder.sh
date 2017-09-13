@@ -3,7 +3,7 @@
 T_import_package(){
     expected="<?xml version=\"1.0\"?><PackageEntry> <ImportDeclaration
         name=\"KTestCase\">
-      <PackageSpecifier>
+      <PackageSpecifier name=\"\">
         <PackageName
             name=\"TestTools\" />
         <PackageName
