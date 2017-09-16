@@ -3,7 +3,7 @@
 T_import_package(){
     expected="<?xml version=\"1.0\"?><PackageEntry> <ImportDeclaration
         name=\"KTestCase\">
-      <PackageSpecifier name=\"\">
+      <PackageSpecifier>
         <PackageName
             name=\"TestTools\" />
         <PackageName
@@ -13,9 +13,8 @@ T_import_package(){
       </PackageSpecifier>
       <PackageEntryReference
           name=\"KTestCase\" />
-    </ImportDeclaration> <ObjectDefinition /></PackageEntry>"
+    </ImportDeclaration></PackageEntry>"
 		xml="<PackageEntry>
-					 <ObjectDefinition />
 				 </PackageEntry>"
 		import_package /TestTools/TestUnit/Objects/KTestCase
 		result=$xml

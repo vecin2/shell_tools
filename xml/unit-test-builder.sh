@@ -1,5 +1,5 @@
 #!/bin/bash
-. ./xml/object-builder2.sh
+. ./xml/object-builder.sh
 
 xml_template_dir=xml/templates
 object_template=$xml_template_dir/Object.xml  
@@ -10,11 +10,12 @@ unit_test_xml(){
 	#xml=$(cat xml/templates/Object.xml)
 	xml=$(cat xmlstartlet/testEmpty.xml)
 	import_package "/TestTools/TestUnit/Objects/KTestCase"
-	import_package "/TestTools2/TestUnit2/Objects2/KTestCaseDos"
+	import_package "/shelltools/Implementation/Xml/Utils/ClassUnderTest"
 	xml_object_definition
 	#set_name $test_class_name
 	#import_package "/shelltools/Implementation/Xml/Utils/ClassUnderTest"
 	inherit_from "KTestCase"
+	add_field $class_under_test_type "classUnderTest"
 	#inherit_from /TestTools/TestUnit/Objects/KTestCase 
 	#add_attribute $class_under_test
 	#add a test method belongs to other method (create_unit_test)
