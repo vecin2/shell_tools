@@ -10,6 +10,7 @@ unit_test_full_path(){
 	repo_path=$(unit_test_path $object_path $is_create_subtest_package)
 	echo ${CORE_HOME}repository/default/$repo_path
 }
+
 unit_test_path(){
 	obj_path=$1
 	create_test_subpackage=$2

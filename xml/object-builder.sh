@@ -61,12 +61,9 @@ xml_type_def_ref(){
 	xml=$(echo $xml | xmlstarlet ed -s /PackageEntry/ObjectDefinition/InstanceFields/ObjectField -t elem -n TypeDefinitionReference -v "" -i "//TypeDefinitionReference" -t attr -n "name" -v "ClassUnderTest")
 }
 
-add_square_brackets(){
-	xml=$(echo $xml |  sed 's/DOCTYPE ObjectDefinition/DOCTYPE ObjectDefinition []/')
-}	
-
 inherit_from(){
 	obj_def_path="/PackageEntry/ObjectDefinition"
 	super_class_path=$obj_def_path/Superclass
 	xml=$(echo $xml | xmlstarlet ed -s $obj_def_path -t elem -n Superclass -v "" -i $super_class_path -t attr -n name -v $1 -i $super_class_path -t attr -n nested -v false)
 }
+

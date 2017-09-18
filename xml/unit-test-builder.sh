@@ -22,7 +22,6 @@ unit_test_xml(){
 	#add_fail_test_method "test$class_under_test_name"
 	#if not exist create test runner
 	#run unit test
-	add_square_brackets
 
 	#echo $xml
 }
