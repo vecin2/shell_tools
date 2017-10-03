@@ -36,29 +36,29 @@ xml_package_entry_reference(){
 }
 
 xml_object_definition(){
-	xml=$(echo $xml |  xmlstarlet ed -s PackageEntry -t elem -n ObjectDefinition -v "" -i "//ObjectDefinition" -t attr -n designNotes -v "Undefined" -i "//ObjectDefinition" -t attr -n name -v "TestClassUnderTest" -i "//ObjectDefinition" -t attr -n version -v "4.3.0")
+	xml=$(echo $xml |  xmlstarlet ed -s PackageEntry -t elem -n ObjectDefinition -v "" -i "//ObjectDefinition" -t attr -n designNotes -v "Undefined" -i "//ObjectDefinition" -t attr -n name -v "$1" -i "//ObjectDefinition" -t attr -n version -v "4.3.0")
 }
 add_field(){
 	field_type=$1
 	field_name=$2
 	xml_instance_fields
-	xml_object_field $1 $2
+	xml_object_field $field_type $field_name
 }
 xml_instance_fields(){
 	xml=$(echo $xml | xmlstarlet ed -s /PackageEntry/ObjectDefinition -t elem -n InstanceFields -v "")
 }
 
 xml_object_field(){
-	xml=$(echo $xml | xmlstarlet ed -s /PackageEntry/ObjectDefinition/InstanceFields -t elem -n ObjectField -v "" -i "//ObjectField" -t attr -n isAggregate -v "false" -i "//ObjectField" -t attr -n name -v "$1")
+	xml=$(echo $xml | xmlstarlet ed -s /PackageEntry/ObjectDefinition/InstanceFields -t elem -n ObjectField -v "" -i "//ObjectField" -t attr -n isAggregate -v "false" -i "//ObjectField" -t attr -n name -v "$2")
 	xml_obj_loc
-	xml_type_def_ref
+	xml_type_def_ref $1
 }
 xml_obj_loc(){
 	xml=$(echo $xml | xmlstarlet ed -s /PackageEntry/ObjectDefinition/InstanceFields/ObjectField -t elem -n ObjectField_loc -v "" -i "//ObjectField_loc" -t attr -n locale -v "")
 	xml=$(echo $xml | xmlstarlet ed -s /PackageEntry/ObjectDefinition/InstanceFields/ObjectField/ObjectField_loc -t elem -n Format -v "")
 }
 xml_type_def_ref(){
-	xml=$(echo $xml | xmlstarlet ed -s /PackageEntry/ObjectDefinition/InstanceFields/ObjectField -t elem -n TypeDefinitionReference -v "" -i "//TypeDefinitionReference" -t attr -n "name" -v "ClassUnderTest")
+	xml=$(echo $xml | xmlstarlet ed -s /PackageEntry/ObjectDefinition/InstanceFields/ObjectField -t elem -n TypeDefinitionReference -v "" -i "//TypeDefinitionReference" -t attr -n "name" -v "$1")
 }
 
 inherit_from(){
@@ -66,4 +66,9 @@ inherit_from(){
 	super_class_path=$obj_def_path/Superclass
 	xml=$(echo $xml | xmlstarlet ed -s $obj_def_path -t elem -n Superclass -v "" -i $super_class_path -t attr -n name -v $1 -i $super_class_path -t attr -n nested -v false)
 }
+
+add_square_brackets_xml(){
+	xml=$(echo "$xml" |  sed 's/DOCTYPE ObjectDefinition/DOCTYPE ObjectDefinition []/')
+	echo "$xml"
+}	
 

@@ -8,7 +8,10 @@ unit_test_full_path(){
 	object_path=$1
 	is_create_subtest_package=$2
 	repo_path=$(unit_test_path $object_path $is_create_subtest_package)
-	echo ${CORE_HOME}repository/default/$repo_path
+	full_package_path=${CORE_HOME}repository/default/$repo_path
+	
+	object_name=${object_path##*/}
+	echo "$full_package_path/Test$object_name.xml"
 }
 
 unit_test_path(){
