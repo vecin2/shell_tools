@@ -3,7 +3,7 @@
 . ./configuration.sh
 
 if [ $# -ne 2 ]; then
-	echo Please enter two parameters: patch.name relative.module.path
+	echo Please enter two parameters: patch.name relative.package.path
 	exit 1
 fi
 PATCH_NAME=$1
