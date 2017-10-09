@@ -16,7 +16,7 @@ echo $PATCH_NAME >  $BASE_TEMP_PATH/META-INF/patch.index
 
 cd ../repository/default
 
-FILES=$(svn st AddCoreChannelsReportingFacts/ AddCoreW* CoreChannels/Test* | awk '{print $2}')
+FILES=$(svn st FrameworkCaseHandling/Implementation/CaseTypeSLA/ CoreChannels/Test* | awk '{print $2}')
 echo "$FILES"
 echo moving files to $TEMP_PATH
 cp --parents $(svn st AddCoreChannelsReportingFacts/ AddCoreW* CoreChannels/Test* | awk '{print $2}')  $PATCH_REPO_PATH
