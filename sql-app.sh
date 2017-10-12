@@ -163,8 +163,10 @@ generate(){
 	SQL_COMMENT="--$COMMENT"
 	#Invokes methods which inside will call parse_template which sets the variable LAST_PARSED_TEMPLATE
 	"$1"
-	CURRENT_SQL=$(empty_parse_buffer)
- 	printf "Generating SQL:\n $CURRENT_SQL"; SQL=$SQL$SQL_COMMENT$'\n'$CURRENT_SQL$SEPARATOR; 
+  CURRENT_SQL=$LAST_PARSED_TEMPLATE
+	empty_parse_buffer
+ 	printf "Generating SQL:\n $CURRENT_SQL"; 
+	SQL=$SQL$SQL_COMMENT$'\n'$CURRENT_SQL$SEPARATOR; 
 	PLACE_HOLDERS=()
 }
 map_entitlement(){
