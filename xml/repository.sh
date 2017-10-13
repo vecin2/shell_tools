@@ -2,27 +2,38 @@
 
 . ./lib/string_manipulation.sh
 . ./configuration.sh
-
+integration_test_full_path(){
+	echo $(test_full_path "$1" "$2" "IntegrationTests")
+}
 
 unit_test_full_path(){
+	echo $(test_full_path "$1" "$2" "UnitTests")
+}
+
+test_full_path(){
 	object_path=$1
 	is_create_subtest_package=$2
-	repo_path=$(unit_test_path $object_path $is_create_subtest_package)
+	test_type=$3
+	if [ -z "$is_create_test_subpackage" ]; then
+		is_create_test_subpackage=false
+	fi
+	repo_path=$(test_path $object_path $is_create_test_subpackage $test_type)
 	full_package_path=${CORE_HOME}repository/default/$repo_path
 	
 	object_name=${object_path##*/}
 	echo "$full_package_path/Test$object_name.xml"
 }
 
-unit_test_path(){
+test_path(){
 	obj_path=$1
 	create_test_subpackage=$2
-
+	test_type=$3
 	test_subpackage=$(extract_test_subpackage $obj_path $create_test_subpackage)
-	result=$(extract_module)/Test/${test_subpackage}UnitTests
+	result=$(extract_module)/Test/${test_subpackage}$test_type
 
   echo $result
 }
+
 
 extract_module(){
 	echo $obj_path | awk -F "/Implementation" '{print $1}'

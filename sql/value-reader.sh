@@ -6,12 +6,12 @@ export PLACE_HOLDERS=()
 prompt_enter_value(){
 	LABEL=$1
 	if [ "$3" ]; then
-		DEFAULT_VALUE=$3
-		LABEL="${LABEL} (default is $DEFAULT_VALUE)"
+		predef_value=$3
+		LABEL="${LABEL}"
 	else
-		DEFAULT_VALUE=""
+		predef_value=""
 	fi	
-	read -e -p "$LABEL:"  -i "$DEFAULT_VALUE" VALUE
+	read -e -p "$LABEL:"  -i "$predef_value" VALUE
 	while contains "$VALUE" "\*" 
 	do
 		echo Grepping file $CORE_HOME/work/modifiable.id.map.file
@@ -19,7 +19,7 @@ prompt_enter_value(){
 		read -e -p "$LABEL:" -i "$VALUE" VALUE
 	done
 	if [[ -z "$VALUE" ]]; then
-		VALUE=$DEFAULT_VALUE
+		VALUE=$predef_value
 	fi
 	set_value "$2" "$VALUE"
 }
@@ -30,7 +30,7 @@ read_value(){
 	fi
 }
 set_value(){
-	eval "export $1=\"$2\""
+	eval "$1=\"$2\""
 	PLACE_HOLDERS+=($1)
 }
 
@@ -43,4 +43,13 @@ contains() {
 	else
 		return 1    # $substring is not in $string
 	fi
+}
+read_sql_path(){
+	read_value "$1" "$2" "../modules/$MODULES_PREFIX"
+}
+read_prj_path(){
+	read_value "$1" "$2" "../repository/default/$MODULES_PREFIX"
+}
+read_repo_path(){
+	read_value "$1" "$2" "../repository/default/"
 }
