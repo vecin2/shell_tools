@@ -4,22 +4,22 @@
 . ./xml/repository.sh
 
 T_unit_test_path_start_with_no_delimiter(){
-	result=$(unit_test_path "ShellTools/Implementation/xml/Objects/ClassUnderTest" true)
+	result=$(test_path "ShellTools/Implementation/xml/Objects/ClassUnderTest" false "UnitTests")
 
-	assert_equals "ShellTools/Test/xml/UnitTests" $result
+	assert_equals "ShellTools/Test/UnitTests" $result
 }
 
 T_unit_test_path_start_with_delimiter(){
-	result=$(unit_test_path "/ShellTools/Implementation/xml/Objects/ClassUnderTest" true)
+	result=$(test_path "/ShellTools/Implementation/xml/Objects/ClassUnderTest" false "UnitTests")
 
-	assert_equals "/ShellTools/Test/xml/UnitTests" $result
+	assert_equals "/ShellTools/Test/UnitTests" $result
 }
 
 T_unit_test_path(){
-	result=$(unit_test_path "/ShellTools/Implementation/xml/Objects/ClassUnderTest" false)
+	result=$(test_path "/ShellTools/Implementation/xml/Objects/ClassUnderTest" true "UnitTests")
 	echo result is $result
 
-	assert_equals "/ShellTools/Test/UnitTests" $result
+	assert_equals "/ShellTools/Test/xml/UnitTests" $result
 
 }
 

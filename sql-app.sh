@@ -1,6 +1,7 @@
 #!/bin/bash
 #read -e -p 
 
+
 . ./sql/sql-base.sh
 . ./sql/template-value-builder.sh
 . ./svn-rev-number.sh
