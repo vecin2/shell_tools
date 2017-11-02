@@ -12,17 +12,19 @@ refresh_jar_from_svn(){
 	svn up $JAR_FILE_PATH
 }
 prompt_remove_files(){
+	echo "Prompting files within $1"
 	for filepath in $1; do
 		if [ "$filepath" == "$1" ]; then
 			echo "No files to expand within $1"
 			return 1
 		fi
-		filename=`basename $filepath`
+		echo "Getting file name from $filepath"
+		filename=`basename "$filepath"`
 		read -p "$filename Do you want to refresh this file(y/n/a)?" choice
 
 		case $choice in
 			[Yy]* ) echo Yes; ;;
-			[Nn]* ) echo No;rm $filepath ;;
+			[Nn]* ) echo No;rm "$filepath" ;;
 			[Aa]* ) echo All; break;;
 		esac
 	done
