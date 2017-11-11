@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ObjectDefinition []>
+<PackageEntry>
+  <ImportDeclaration name="KTestCase">
+    <PackageSpecifier>
+      <PackageName name="TestTools"/>
+      <PackageName name="TestUnit"/>
+      <PackageName name="Objects"/>
+    </PackageSpecifier>
+    <PackageEntryReference name="KTestCase"/>
+  </ImportDeclaration>
+  <ImportDeclaration name="FilePrinter">
+    <PackageSpecifier>
+      <PackageName name="shelltools"/>
+      <PackageName name="Implementation"/>
+      <PackageName name="FilePrinting"/>
+    </PackageSpecifier>
+    <PackageEntryReference name="FilePrinter"/>
+  </ImportDeclaration>
+  <ObjectDefinition designNotes="Undefined" name="TestFilePrinter" version="4.3.0">
+    <Superclass name="KTestCase" nested="false"/>
+    <InstanceFields>
+      <ObjectField isAggregate="false" name="classUnderTest">
+        <ObjectField_loc locale="">
+          <Format/>
+        </ObjectField_loc>
+        <TypeDefinitionReference name="FilePrinter"/>
+      </ObjectField>
+    </InstanceFields>
+  </ObjectDefinition>
+</PackageEntry>

@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE UnitTestProcess [] >
+  <PackageEntry>
+    <ImportDeclaration
+        name="KTestSuite">
+      <PackageSpecifier>
+        <PackageName
+            name="TestTools" />
+        <PackageName
+            name="TestUnit" />
+        <PackageName
+            name="Objects" />
+      </PackageSpecifier>
+      <PackageEntryReference
+          name="KTestSuite" />
+    </ImportDeclaration>
+    <UnitTestProcess
+        appearsInHistory="true"
+        cyclic="false"
+        designNotes="Undefined"
+        exceptionStrategy="1"
+        icon=""
+        logicalDatabaseConnection=""
+        name="RunUnitTestsManual"
+        nested="false"
+        pointOfNoReturn="false"
+        targetPackage=""
+        transactionBehaviour="TX_NOT_SUPPORTED"
+        version="4.3.0"
+        waitOnChildren="false">
+      <InstanceFields>
+        <IntegerField
+            isAttribute="false"
+            name="numberOfAssertions">
+          <IntegerField_loc
+              locale="">
+            <Format />
+            <JavascriptFunction
+                exceptionStrategy="0"
+                language="EcmaScript"
+                name=""
+                version="">
+              <Verbatim
+                  fieldName="text">
+<![CDATA[0]]>
+              </Verbatim>
+            </JavascriptFunction>
+          </IntegerField_loc>
+        </IntegerField>
+      </InstanceFields>
+      <InstanceProcedures>
+        <Procedure
+            exceptionStrategy="0"
+            isPending="false"
+            language="EcmaScript"
+            name="setUp"
+            nested="true" />
+        <Procedure
+            exceptionStrategy="0"
+            isPending="false"
+            language="EcmaScript"
+            name="test"
+            nested="true" />
+      </InstanceProcedures>
+      <StartNode
+          displayName=""
+          name=""
+          x="16"
+          y="64" />
+      <EndNode
+          displayName=""
+          name=""
+          x="496"
+          y="64" />
+      <ProcedureCall
+          builtIn="false"
+          classMethod="false"
+          displayName="setUp"
+          methodName="setUp"
+          name="setUp"
+          type="UnitTestProcess"
+          x="160"
+          y="64">
+        <RecordDefinitionReference
+            name="RunUnitTestsManual"
+            nested="false" />
+      </ProcedureCall>
+      <ProcedureCall
+          builtIn="false"
+          classMethod="false"
+          displayName="test"
+          methodName="test"
+          name="test"
+          type="UnitTestProcess"
+          x="336"
+          y="64">
+        <RecordDefinitionReference
+            name="RunUnitTestsManual"
+            nested="false" />
+      </ProcedureCall>
+      <Transition
+          isDefault="false"
+          isExceptionTransition="false"
+          name="transition0"
+          postSwitchTransition="false"
+          x="0"
+          y="0">
+        <StartNodeReference
+            name="" />
+        <ToNode
+            name="setUp" />
+        <GraphNodeList>
+          <GraphNode
+              icon=""
+              isLabelHolder="true"
+              label=""
+              x="80"
+              y="64" />
+        </GraphNodeList>
+      </Transition>
+      <Transition
+          isDefault="false"
+          isExceptionTransition="false"
+          name="transition1"
+          postSwitchTransition="false"
+          x="0"
+          y="0">
+        <FromNode
+            name="setUp" />
+        <ToNode
+            name="test" />
+        <GraphNodeList>
+          <GraphNode
+              icon=""
+              isLabelHolder="true"
+              label=""
+              x="256"
+              y="64" />
+        </GraphNodeList>
+      </Transition>
+      <Transition
+          isDefault="false"
+          isExceptionTransition="false"
+          name="transition2"
+          postSwitchTransition="false"
+          x="0"
+          y="0">
+        <FromNode
+            name="test" />
+        <EndNodeReference
+            name="" />
+        <GraphNodeList>
+          <GraphNode
+              icon=""
+              isLabelHolder="true"
+              label=""
+              x="416"
+              y="64" />
+        </GraphNodeList>
+      </Transition>
+      <BuilderInfo />
+      <TopicScope
+          defineTopicScope="false" />
+      <OnExitProcedure
+          exceptionStrategy="0"
+          isPending="false"
+          language="EcmaScript"
+          name="onExit"
+          nested="true" />
+    </UnitTestProcess>
+  </PackageEntry>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE OnExitProcedure [] >
+  <OnExitProcedure
+      designNotes="Undefined"
+      eventProcedure="false"
+      name="onExit"
+      version="4.3.0" />
