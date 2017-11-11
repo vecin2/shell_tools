@@ -15,5 +15,5 @@ if [ -d $REPO_PATH/UnitTests ]; then
 	ST_PATH="$ST_PATH $REPO_PATH/UnitTests"
 fi
 
-ST_PATH="$ST_PATH ../config/project.properties"
+ST_PATH="$ST_PATH ../config/project.properties ../patches"
 svn st $ST_PATH

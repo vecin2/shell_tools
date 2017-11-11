@@ -1,6 +1,6 @@
 #!/bin/bash
 
-./run-tests.sh http://localhost:8180/GTConnect/TestSuiteAcceptor?gtxInitialProcess=PruTest%2FExecution%2FTestSuiteRunners%2FAllPruTestSuiteRunner&submit=Run
+./run-tests.sh http://localhost:8280/GTConnect/TestSuiteAcceptor?gtxInitialProcess=UnitTests.PackageRunners.RunAllTests&submit=Run
 #WID=`xdotool search --name "Mozilla Firefox" | head -1`
 #xdotool windowactivate $WID
 #xdotool key F5
