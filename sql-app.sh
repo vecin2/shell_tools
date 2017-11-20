@@ -40,6 +40,8 @@ show_menu(){
 	ar. Add Report
 	ae. Add Entitlement
 	me. Map Entitlement
+	aq. Add queue
+	ade. Add Data dictionary entry
 	ms. Modify Schema
 	cs. Custom Script"
 	read -p "Please enter option number: " OPTION
@@ -176,6 +178,37 @@ map_entitlement(){
 	prompt_enter_value "ENTIY_TYPE_ID (e.g ProfileType)" ENTITY_TYPE_ID
 	parse_template map-entitlement.sql	
 }
+add_queue(){
+	prompt_enter_value "Queue name" QUEUE_NAME
+	prompt_enter_value "Display queue name" QUEUE_DISPLAY_NAME
+	parse_template add-queue.sql
+}
+add_data_entry(){
+	prompt_enter_value "Full path (e.g SpenCaseED.caseData.form.location.displayName)" DATA_ENTRY_PATH 
+	prompt_enter_value "Display Name(e.g Form Location)" FIELD_DISPLAY_NAME 
+	set_value PARENT_ENTRY_ID null
+	set_value IS_FIELD "N"
+	set_value IS_RULES_RELEVANT "N"
+	set_value ENTRY_DISPLAY_NAME "null"
+	set_value ENTRY_TYPE "null"
+	set_value "N"
+	local non_fields=${DATA_ENTRY_PATH%.*}
+	local arr=(${non_fields//\./ }); 
+	local field=${DATA_ENTRY_PATH##*.}; 
+	for i in ${arr[@]}; do 
+		set_value ENTRY_NAME "$i"
+		set_value DATA_ENTRY_ID "@EDD.$ENTRY_NAME"
+		parse_template add-data-dictionary-entry.sql
+		set_value PARENT_ENTRY_ID $DATA_ENTRY_ID
+	done
+	set_value IS_FIELD "Y"
+	set_value IS_RULES_RELEVANT "Y"
+	set_value ENTRY_TYPE "'StringField'"
+	set_value ENTRY_NAME "$field"
+	set_value DATA_ENTRY_ID "@EDD.$ENTRY_NAME"
+	set_value ENTRY_DISPLAY_NAME "$FIELD_DISPLAY_NAME"
+	parse_template add-data-dictionary-entry.sql
+}
 #main
 PLACE_HOLDERS=()
 show_menu
@@ -197,6 +230,8 @@ while  [ "$OPTION" != "x" ];do
 		ar  ) generate add_report ;;
 		ae  ) generate add_entitlement ;;
 		me  ) generate map_entitlement ;;
+		aq  ) generate add_queue ;;
+		ade  ) generate add_data_entry ;;
 		rm  ) generate remove_monitor ;;
 		*   ) echo Option $OPTION is not valid. Please enter a valid option ;;
        	esac
