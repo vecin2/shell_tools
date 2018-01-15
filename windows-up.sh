@@ -2,6 +2,6 @@
 
 . ./vb-commands.sh 
 
-start_vm "Win7-ENT"
+start_vm "Win7-ENT" --type gui
 
-:
+

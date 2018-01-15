@@ -5,7 +5,8 @@
 ./windows-up.sh
 ./oracle-up.sh
 
-#./start-all-applications.sh
+sleep 5
+./start-all-applications.sh
 
 ./ad-run.sh
 
