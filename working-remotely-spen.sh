@@ -5,6 +5,6 @@ echo "Redirecting url"
  
  cd ..
 
-echo "Switching svn url"
+#jecho "Switching svn url"
 svn switch --relocate http://10.10.188.144/svn/ScottishPower/EnergyNetworks/CSBluePrint/branches/FP3  http://localhost:9999/svn/ScottishPower/EnergyNetworks/CSBluePrint/branches/FP3/
 
