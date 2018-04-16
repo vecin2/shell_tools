@@ -8,7 +8,7 @@ _ccadmin()
 
 
 	if [ -z "$CCADMIN_COMPLETION_OPTS" ]; then
-		CCADMIN_COMPLETION_OPTS=$($AD/shell_tools/ccadmin.sh  | grep "\[echo\]" | grep -v ":" | awk '{print $2}' | tr  '\n' ' ')
+		CCADMIN_COMPLETION_OPTS=$(cat "$EM_CORE_HOME"/.em/autocompletion/ccadmin_completion)
 		export CCADMIN_COMPLETION_OPTS
 	fi
 
