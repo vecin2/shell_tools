@@ -9,7 +9,7 @@ create_sql_module(){
 	SQL=$3
 	FILE_NAME=$4
 	echo   "Creating sql module with sql: $SQL"
-	SQL_PATH=$CORE_HOME/modules/$SQL_MODULE
+	SQL_PATH=$EM_CORE_HOME/modules/$SQL_MODULE
 	mkdir -p $SQL_PATH
 
 	echo PROJECT \$Revision: $REVISION \$ > $SQL_PATH/update.sequence 
@@ -17,7 +17,6 @@ create_sql_module(){
 		FILE_NAME=tableData.sql
 	fi
 	echo   "$SQL" > $SQL_PATH/$FILE_NAME
-	#vi $SQL_PATH/$FILE_NAME
 	echo $SQL_PATH/$FILE_NAME
 }
 
